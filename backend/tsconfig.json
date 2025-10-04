@@ -1,0 +1,18 @@
+{
+	"compilerOptions": {
+		"strict": true,
+		"target": "ES2022",
+		"module": "commonjs",
+		"outDir": ".build",
+		"moduleResolution": "node",
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"lib": ["ES2022"],
+		"rootDir": "./src",
+		"allowJs": true,
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"baseUrl": "."
+	},
+	"include": ["src/**/*.ts"]
+}
