@@ -98,11 +98,11 @@
 </script>
 
 <div class="roadmap-container">
-    <div class="roadmap-header">
-        <h2 class="roadmap-title">Learning Roadmap</h2>
-        <p class="roadmap-subtitle">Follow your journey step by step</p>
+    <!-- Progress indicator at top -->
+    <div class="progress-bar">
+        <div class="progress-fill" style="width: 30%"></div>
     </div>
-
+    
     <div class="roadmap-canvas">
         <!-- Main curved path line -->
         <svg class="path-svg" viewBox="0 0 100 100" preserveAspectRatio="none">
@@ -195,31 +195,22 @@
         background: rgba(168, 162, 158, 0.5);
     }
 
-    .roadmap-header {
-        text-align: center;
-        margin-bottom: 2rem;
-        padding: 0 1rem;
-        z-index: 10;
+    .progress-bar {
         position: sticky;
         top: 0;
-        background: linear-gradient(180deg, #0f0e0d 0%, rgba(15, 14, 13, 0.95) 70%, rgba(15, 14, 13, 0) 100%);
-        padding-bottom: 1rem;
+        width: 100%;
+        height: 4px;
+        background: rgba(68, 64, 60, 0.3);
+        z-index: 100;
+        border-radius: 0 0 4px 4px;
     }
 
-    .roadmap-title {
-        font-family: 'Comic Relief', system-ui, sans-serif;
-        font-size: clamp(1.8rem, 4vw, 2.5rem);
-        font-weight: bold;
-        color: #fafaf9;
-        margin: 0;
-        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-    }
-
-    .roadmap-subtitle {
-        font-family: 'Comic Relief', system-ui, sans-serif;
-        font-size: clamp(1rem, 2.5vw, 1.2rem);
-        color: #a8a29e;
-        margin: 0.5rem 0 0 0;
+    .progress-fill {
+        height: 100%;
+        background: linear-gradient(90deg, #22c55e 0%, #3b82f6 100%);
+        border-radius: 0 0 4px 4px;
+        transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 0 10px rgba(34, 197, 94, 0.5);
     }
 
     .roadmap-canvas {
@@ -475,11 +466,6 @@
             border-radius: 16px;
         }
 
-        .roadmap-header {
-            margin-bottom: 1.5rem;
-            padding: 0 0.75rem;
-        }
-
         .roadmap-canvas {
             min-height: 1200px;
             padding: 1.5rem 0;
@@ -498,11 +484,6 @@
         .roadmap-container {
             padding: 0.75rem 0.25rem;
             border-radius: 14px;
-        }
-
-        .roadmap-header {
-            margin-bottom: 1rem;
-            padding: 0 0.5rem;
         }
 
         .roadmap-canvas {
