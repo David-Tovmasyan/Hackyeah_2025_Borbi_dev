@@ -1,10 +1,8 @@
-<script>
-    import Header from "$lib/ui/Header.svelte";
-    import Main from "$lib/ui/Main.svelte";
+<script lang="ts">
+    import Roadmap from "$lib/components/Roadmap.svelte";
 </script>
 
-<div class="flex flex-col min-h-screen bg-stone-800">
-    <Header />
-    <Main />
+<div class="w-full h-full flex flex-col items-center justify-center min-h-full p-4 md:p-6">
+    <Roadmap />
 </div>
 
