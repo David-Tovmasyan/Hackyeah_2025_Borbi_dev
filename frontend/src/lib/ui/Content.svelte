@@ -2,18 +2,6 @@
     import Roadmap from "$lib/components/Roadmap.svelte";
 </script>
 
-<div class="content-container">
+<div class="w-full h-full flex flex-col items-center justify-center min-h-full">
     <Roadmap />
 </div>
-
-<style>
-    .content-container {
-        width: 100%;
-        height: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        min-height: 100%;
-    }
-</style>

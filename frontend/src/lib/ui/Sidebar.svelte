@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { page } from '$app/stores';
+    
     type SidebarItem = {
         label: string;
         path: string;
@@ -10,7 +12,7 @@
         {
             label: "Path",
             icon: "path",
-            path: "/app/roadmap",
+            path: "/app",
             color: "#3b82f6"
         },
         {
@@ -50,26 +52,41 @@
         return icons[iconName] || icons.path;
     }
 
+    $: currentPath = $page.url.pathname;
+
     
     
 </script>
 
 <!-- Desktop Sidebar -->
-<aside id="sidebar" class="sidebar-desktop">
-    <div class="sidebar-content">
-        
-
+<aside id="sidebar" class="hidden md:block w-[280px] h-screen sticky top-0 overflow-y-auto overflow-x-hidden
+                          dark:bg-gradient-to-b dark:from-stone-900 dark:to-[#0f0e0d] dark:border-stone-700/30
+                          light:bg-gradient-to-b light:from-sky-50 light:to-sky-100 light:border-sky-200
+                          border-r [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent 
+                          [&::-webkit-scrollbar-thumb]:dark:bg-stone-400/20 [&::-webkit-scrollbar-thumb]:light:bg-sky-400/20 
+                          [&::-webkit-scrollbar-thumb]:rounded-lg">
+    <div class="flex flex-col py-8 h-full">
         <!-- Navigation Items -->
-        <nav class="sidebar-nav">
+        <nav class="flex flex-col gap-2 px-4">
             {#each sidebarItems as item (item.path)}
-                <a href={item.path} class="nav-item" style="--item-color: {item.color}">
-                    <div class="nav-icon">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <a 
+                    href={item.path} 
+                    class="group relative flex items-center gap-4 px-4 py-3.5 rounded-xl no-underline transition-all duration-200 overflow-hidden 
+                           {currentPath === item.path 
+                               ? 'dark:bg-stone-700/50 dark:text-stone-50 light:bg-sky-200/70 light:text-slate-800' 
+                               : 'dark:text-stone-400 light:text-slate-600'}
+                           dark:hover:bg-stone-700/30 dark:hover:text-stone-50 
+                           light:hover:bg-sky-200/50 light:hover:text-slate-800
+                           hover:translate-x-1 active:translate-x-1 active:scale-[0.98]" 
+                    style="--item-color: {item.color}"
+                >
+                    <div class="w-6 h-6 flex-shrink-0 transition-all duration-200 group-hover:scale-110" style="color: var(--item-color, #a8a29e);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-full h-full">
                             {@html getIcon(item.icon)}
                         </svg>
                     </div>
-                    <span class="nav-label">{item.label}</span>
-                    <div class="nav-indicator"></div>
+                    <span class="font-['Lato'] text-[0.95rem] font-semibold tracking-tight">{item.label}</span>
+                    <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full w-0.5 h-[60%] rounded-l-lg transition-transform duration-200 group-hover:translate-x-0" style="background: var(--item-color, #3b82f6);"></div>
                 </a>
             {/each}
         </nav>
@@ -77,233 +94,34 @@
 </aside>
 
 <!-- Mobile Bottom Navigation -->
-<nav class="mobile-nav">
-    <div class="mobile-nav-container">
+<nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t
+             dark:bg-[rgba(28,25,23,0.95)] dark:border-stone-700/30
+             light:bg-[rgba(224,242,254,0.95)] light:border-sky-300
+             backdrop-blur-xl shadow-[0_-4px_20px_rgba(0,0,0,0.3)]" 
+     style="padding-bottom: env(safe-area-inset-bottom, 0);">
+    <div class="flex justify-around items-center p-2 max-w-[600px] mx-auto">
         {#each sidebarItems as item (item.path)}
-            <a href={item.path} class="mobile-nav-item" style="--item-color: {item.color}">
-                <div class="mobile-nav-icon">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <a 
+                href={item.path} 
+                class="flex flex-col items-center justify-center gap-1 p-2 min-w-[60px] rounded-xl no-underline transition-all duration-200 relative active:scale-[0.92] 
+                       {currentPath === item.path 
+                           ? 'dark:text-stone-200 light:text-slate-800' 
+                           : 'dark:text-stone-500 light:text-slate-500'}
+                       [@media(max-width:480px)]:min-w-[50px] [@media(max-width:480px)]:p-1.5 [@media(max-width:360px)]:min-w-0" 
+                style="--item-color: {item.color}"
+            >
+                <div class="w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-200 
+                            dark:active:bg-stone-700/50 light:active:bg-sky-200/50
+                            [@media(max-width:480px)]:w-9 [@media(max-width:480px)]:h-9 [@media(max-width:360px)]:w-11 [@media(max-width:360px)]:h-11" 
+                     style="color: var(--item-color, #a8a29e);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="w-6 h-6 [@media(max-width:480px)]:w-5 [@media(max-width:480px)]:h-5">
                         {@html getIcon(item.icon)}
                     </svg>
                 </div>
-                <span class="mobile-nav-label">{item.label}</span>
+                <span class="font-['Lato'] text-[0.65rem] font-semibold text-center transition-colors duration-200 
+                             dark:text-stone-400 light:text-slate-600
+                             [@media(max-width:480px)]:text-[0.6rem] [@media(max-width:360px)]:hidden">{item.label}</span>
             </a>
         {/each}
     </div>
 </nav>
-
-<style>
-    /* Desktop Sidebar */
-    .sidebar-desktop {
-        display: none;
-        width: 280px;
-        height: 100vh;
-        background: linear-gradient(180deg, #1c1917 0%, #0f0e0d 100%);
-        border-right: 1px solid rgba(68, 64, 60, 0.3);
-        position: sticky;
-        top: 0;
-        overflow-y: auto;
-        overflow-x: hidden;
-    }
-
-    .sidebar-desktop::-webkit-scrollbar {
-        width: 4px;
-    }
-
-    .sidebar-desktop::-webkit-scrollbar-track {
-        background: transparent;
-    }
-
-    .sidebar-desktop::-webkit-scrollbar-thumb {
-        background: rgba(168, 162, 158, 0.2);
-        border-radius: 10px;
-    }
-
-    .sidebar-content {
-        display: flex;
-        flex-direction: column;
-        padding: 2rem 0;
-        height: 100%;
-    }
-
-    .sidebar-nav {
-        display: flex;
-        flex-direction: column;
-        gap: 0.5rem;
-        padding: 0 1rem;
-    }
-
-    .nav-item {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        padding: 0.875rem 1rem;
-        border-radius: 12px;
-        color: #a8a29e;
-        text-decoration: none;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-        overflow: hidden;
-    }
-
-    .nav-item:hover {
-        background: rgba(68, 64, 60, 0.3);
-        color: #fafaf9;
-        transform: translateX(4px);
-    }
-
-    .nav-item:active {
-        transform: translateX(4px) scale(0.98);
-    }
-
-    .nav-icon {
-        width: 24px;
-        height: 24px;
-        color: var(--item-color, #a8a29e);
-        transition: all 0.2s ease;
-        flex-shrink: 0;
-    }
-
-    .nav-item:hover .nav-icon {
-        color: var(--item-color, #fafaf9);
-        transform: scale(1.1);
-    }
-
-    .nav-label {
-        font-family: 'Comic Relief', system-ui, sans-serif;
-        font-size: 0.95rem;
-        font-weight: 600;
-        letter-spacing: -0.01em;
-    }
-
-    .nav-indicator {
-        position: absolute;
-        right: 0;
-        top: 50%;
-        transform: translateY(-50%) translateX(100%);
-        width: 3px;
-        height: 60%;
-        background: var(--item-color, #3b82f6);
-        border-radius: 10px 0 0 10px;
-        transition: transform 0.2s ease;
-    }
-
-    .nav-item:hover .nav-indicator {
-        transform: translateY(-50%) translateX(0);
-    }
-
-    /* Mobile Bottom Navigation */
-    .mobile-nav {
-        display: block;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        background: rgba(28, 25, 23, 0.95);
-        backdrop-filter: blur(20px);
-        border-top: 1px solid rgba(68, 64, 60, 0.3);
-        box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
-        z-index: 50;
-        padding: env(safe-area-inset-bottom, 0);
-    }
-
-    .mobile-nav-container {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-        padding: 0.5rem;
-        max-width: 600px;
-        margin: 0 auto;
-    }
-
-    .mobile-nav-item {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        gap: 0.25rem;
-        padding: 0.5rem;
-        min-width: 60px;
-        border-radius: 12px;
-        color: #78716c;
-        text-decoration: none;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-        position: relative;
-    }
-
-    .mobile-nav-item:active {
-        transform: scale(0.92);
-    }
-
-    .mobile-nav-item:active .mobile-nav-icon {
-        background: rgba(68, 64, 60, 0.5);
-    }
-
-    .mobile-nav-icon {
-        width: 40px;
-        height: 40px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 10px;
-        transition: all 0.2s ease;
-        color: var(--item-color, #a8a29e);
-    }
-
-    .mobile-nav-icon svg {
-        width: 24px;
-        height: 24px;
-    }
-
-    .mobile-nav-label {
-        font-family: 'Comic Relief', system-ui, sans-serif;
-        font-size: 0.65rem;
-        font-weight: 600;
-        color: #a8a29e;
-        text-align: center;
-        transition: color 0.2s ease;
-    }
-
-    /* Responsive breakpoints */
-    @media (min-width: 768px) {
-        .sidebar-desktop {
-            display: block;
-        }
-
-        .mobile-nav {
-            display: none;
-        }
-    }
-
-    @media (max-width: 480px) {
-        .mobile-nav-item {
-            min-width: 50px;
-            padding: 0.4rem;
-        }
-
-        .mobile-nav-icon {
-            width: 36px;
-            height: 36px;
-        }
-
-        .mobile-nav-icon svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        .mobile-nav-label {
-            font-size: 0.6rem;
-        }
-    }
-
-    @media (max-width: 360px) {
-        .mobile-nav-label {
-            display: none;
-        }
-
-        .mobile-nav-icon {
-            width: 44px;
-            height: 44px;
-        }
-    }
-</style>

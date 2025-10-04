@@ -35,7 +35,3 @@ id="layout"
         </div>
     </main>
 </div>
-
-<style>
-
-</style>
