@@ -5,14 +5,35 @@
 </script>
 
 <div class="
-    h-screen w-full mt-5
+    min-h-screen w-full
     bg-stone-800
-    flex flex-col-reverse md:flex-row
+    flex flex-col md:flex-row
+    relative
 "
 id="layout"
 >
     <Sidebar />
-    <Content />
+    
+    <!-- Main Content Area -->
+    <main class="
+        flex-1 
+        md:ml-0
+        pb-20 md:pb-0
+        overflow-x-hidden
+        h-screen md:min-h-screen
+        w-full
+        md:w-auto
+    ">
+        <div class="
+            h-full 
+            p-4 md:p-6 
+            max-w-full
+            mx-auto
+            overflow-y-auto
+        ">
+            <Content />
+        </div>
+    </main>
 </div>
 
 <style>
