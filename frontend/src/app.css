@@ -1,8 +1,42 @@
 @import 'tailwindcss';
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
 
-@custom-variant dark (&:where(.dark, .dark *));
+* {
+    font-family: 'Lato', sans-serif;
+}
 
-@font-face {
-    font-family: 'Comic Relief'; /*a name to be used later*/
-    src: url('./lib/assets/fonts/Comic_Relief/ComicRelief-Bold.ttf'); /*URL to font*/
+/* Dark Mode */
+.dark body {
+    background-color: #0a0a0a;
+    color: #f5f5f5;
+}
+
+/* Light Mode - Seal Colors (blue-gray palette) */
+.light body {
+    background-color: #e8f4f8;
+    color: #1e293b;
+}
+
+.light {
+    --bg-primary: #e8f4f8;
+    --bg-secondary: #d1e7ed;
+    --bg-tertiary: #b8dce5;
+    --text-primary: #1e293b;
+    --text-secondary: #475569;
+    --text-tertiary: #64748b;
+    --accent-primary: #0ea5e9;
+    --accent-secondary: #0284c7;
+    --border-color: #cbd5e1;
+}
+
+.dark {
+    --bg-primary: #0a0a0a;
+    --bg-secondary: #1c1917;
+    --bg-tertiary: #292524;
+    --text-primary: #f5f5f5;
+    --text-secondary: #d6d3d1;
+    --text-tertiary: #a8a29e;
+    --accent-primary: #3b82f6;
+    --accent-secondary: #2563eb;
+    --border-color: #44403c;
 }
