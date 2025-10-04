@@ -1,0 +1,8 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@font-face {
+    font-family: 'Comic Relief'; /*a name to be used later*/
+    src: url('./lib/assets/fonts/Comic_Relief/ComicRelief-Bold.ttf'); /*URL to font*/
+}
