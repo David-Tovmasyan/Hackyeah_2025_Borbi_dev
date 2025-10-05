@@ -19,15 +19,11 @@
         <div class="flex items-center justify-between">
             <div class="flex items-center gap-4">
                 <img src={olaf1} alt="Olaf" class="w-16 h-16 object-contain rounded-full border-[4px] border-[#A7D8F0]" />
-                <h1 class="font-['Lato'] text-3xl font-bold text-slate-900">
+                <h1 class="font-['Lato'] text-2xl md:text-3xl font-bold text-slate-900">
                     Ustawienia ⚙️
                 </h1>
             </div>
-            <div class="px-4 py-2 bg-gradient-to-r from-[#7EC8E3] to-[#5DADE2] rounded-full border-[4px] border-[#A7D8F0]">
-                <span class="font-['Lato'] text-sm text-white font-bold">
-                    Dostosuj aplikację
-                </span>
-            </div>
+
         </div>
 
         <!-- Account Section -->

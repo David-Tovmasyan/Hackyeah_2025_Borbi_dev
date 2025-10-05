@@ -34,14 +34,10 @@
         <!-- Olaf Mascot i nagłówek -->
         <div class="flex items-center justify-between mb-4">
             <img src={olaf1} alt="Olaf" class="w-16 h-16 object-contain rounded-full border-[4px] border-[#A7D8F0]" />
-            <h1 class="font-['Lato'] text-3xl font-bold text-slate-900">
+            <h1 class="font-['Lato'] text-2xl md:text-3xl font-bold text-slate-900">
                 Twoja Historia 📅
             </h1>
-            <div class="px-4 py-2 bg-gradient-to-r from-[#7EC8E3] to-[#5DADE2] rounded-full border-[4px] border-[#A7D8F0]">
-                <span class="font-['Lato'] text-sm text-white font-bold">
-                    Dni: {historyData.filter(d => d.completed).length}
-                </span>
-            </div>
+            <div></div>
         </div>
 
         <!-- Stats Cards -->
@@ -145,7 +141,7 @@
         <div class="bg-white/90 backdrop-blur-sm border-[4px] border-[#A7D8F0] rounded-2xl p-6 shadow-lg shadow-[#A7D8F0]/20">
             <h2 class="font-['Lato'] text-xl font-bold text-slate-900 mb-4">Ten Tydzień</h2>
             
-            <div class="grid grid-cols-7 gap-2">
+            <div class="flex flex-wrap gap-4 gap-y-6">
                 {#each historyData.slice(0, 7).reverse() as entry}
                     <div class="flex flex-col items-center gap-2">
                         <span class="text-xs text-slate-600 font-medium">
@@ -165,7 +161,7 @@
                             {/if}
                         </div>
                         <span class="text-[0.65rem] text-slate-500">
-                            {new Date(entry.date).getDate()}
+                            {new Date(entry.date).toLocaleDateString('pl-PL', { day: "2-digit", month: "short"})}
                         </span>
                     </div>
                 {/each}

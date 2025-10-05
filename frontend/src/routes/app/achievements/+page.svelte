@@ -12,7 +12,6 @@
         target?: number;
         color: string;
     };
-
     const achievements: Achievement[] = [
         {
             id: "first-step",
@@ -102,10 +101,13 @@
             color: "from-rose-500 to-pink-600"
         }
     ];
-
-    const unlockedCount = achievements.filter(a => a.unlocked).length;
+    const unlockedAchievements = achievements.filter(a => a.unlocked);
+    const unlockedCount = unlockedAchievements.length;
     const totalCount = achievements.length;
     const completionPercentage = Math.round((unlockedCount / totalCount) * 100);
+
+    let currentAchievement: Achievement[] = achievements;
+
 </script>
 
 <!-- ACHIEVEMENTS PAGE z kolorami landing page -->
@@ -116,7 +118,7 @@
             <div class="flex items-center justify-between flex-wrap gap-4">
                 <div class="flex items-center gap-4">
                     <img src={olaf2} alt="Olaf" class="w-20 h-20 object-contain rounded-full border-[6px] border-[#A7D8F0] shadow-xl shadow-[#A7D8F0]/30" />
-                    <h1 class="font-['Lato'] text-4xl font-bold text-slate-900">
+                    <h1 class="font-['Lato'] text-2xl md:text-3xl font-bold text-slate-900">
                         Osiągnięcia 🏆
                     </h1>
                 </div>
@@ -143,20 +145,20 @@
 
         <!-- Filter Tabs -->
         <div class="flex gap-3 flex-wrap">
-            <button class="px-6 py-3 rounded-2xl bg-[#B5E3FF] text-slate-900 font-['Lato'] text-lg font-bold transition-all duration-200 hover:bg-[#A7D8F0] border-[6px] border-[#7EC8E3] hover:scale-105 shadow-lg shadow-[#B5E3FF]/30">
+            <button class="px-6 py-3 rounded-2xl bg-white/80 text-slate-700 font-['Lato'] text-lg font-bold transition-all duration-200 hover:bg-white/95 border-[6px] border-[#A7D8F0]/70 hover:scale-105" onclick={()=>currentAchievement = achievements}>
                 Wszystkie
             </button>
-            <button class="px-6 py-3 rounded-2xl bg-white/80 text-slate-700 font-['Lato'] text-lg font-semibold transition-all duration-200 hover:bg-white/95 border-[6px] border-[#A7D8F0]/70 hover:scale-105">
+            <button class="px-6 py-3 rounded-2xl bg-white/80 text-slate-700 font-['Lato'] text-lg font-semibold transition-all duration-200 hover:bg-white/95 border-[6px] border-[#A7D8F0]/70 hover:scale-105" onclick={()=>currentAchievement = achievements.filter(a => a.unlocked)}>
                 Odblokowane
             </button>
-            <button class="px-6 py-3 rounded-2xl bg-white/80 text-slate-700 font-['Lato'] text-lg font-semibold transition-all duration-200 hover:bg-white/95 border-[6px] border-[#A7D8F0]/70 hover:scale-105">
+            <button class="px-6 py-3 rounded-2xl bg-white/80 text-slate-700 font-['Lato'] text-lg font-semibold transition-all duration-200 hover:bg-white/95 border-[6px] border-[#A7D8F0]/70 hover:scale-105" onclick={()=>currentAchievement = achievements.filter(a => !a.unlocked)}>
                 Zablokowane
             </button>
         </div>
 
         <!-- Achievements Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {#each achievements as achievement}
+            {#each currentAchievement as achievement}
                 <div class="group relative backdrop-blur-sm rounded-3xl p-8 transition-all duration-300 hover:scale-105 hover:shadow-2xl border-[6px]
                             {achievement.unlocked 
                                 ? 'bg-gradient-to-br from-[#D4EAF7] to-[#B5E3FF] border-[#FFB88C] shadow-xl shadow-[#B5E3FF]/40'
