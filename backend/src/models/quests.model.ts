@@ -1,6 +1,7 @@
 import z from "zod";
 
 export const QuestIdSchema = z.uuid()
+export type QuestId = z.infer<typeof QuestIdSchema>;
 
 export const QuestSchema = z.object({
   id: QuestIdSchema,

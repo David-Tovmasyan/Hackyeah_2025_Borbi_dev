@@ -2,8 +2,11 @@ import z from "zod";
 import { QuestIdSchema } from "./quests.model";
 import { UserIdSchema } from "./users.model";
 
+export const UserQuestIdSchema = z.uuid()
+export type UserQuestId = z.infer<typeof UserQuestIdSchema>
+
 export const UserQuestSchema = z.object({
-  id: z.uuid(),
+  id: UserQuestIdSchema,
   questId: QuestIdSchema, 
   userId: UserIdSchema,
   completed: z.boolean(),

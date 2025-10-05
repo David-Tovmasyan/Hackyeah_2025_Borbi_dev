@@ -1,4 +1,5 @@
 import express from 'express';
+import { userControllerFactory } from './controllers/users.controller';
 
 const main = () => {
 	const app = express();
@@ -6,7 +7,8 @@ const main = () => {
 	app.use(express.urlencoded({ extended: true }));
 
 	const port = Number.parseFloat(process.env.PORT ?? '3000');
-
+	userControllerFactory(app)
+	
 	app.listen(port, () => {
 		console.log(`Server is running on http://localhost:${port}`);
 	});
