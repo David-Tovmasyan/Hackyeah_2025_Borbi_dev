@@ -163,16 +163,17 @@
     }
 </script>
 
-<div class="w-full h-full relative bg-gradient-to-b from-[#0f0e0d] via-stone-900 to-[#0f0e0d] rounded-3xl px-2 pb-6 overflow-y-auto overflow-x-hidden shadow-[0_10px_40px_rgba(0,0,0,0.6),inset_0_1px_1px_rgba(255,255,255,0.03)] border border-stone-700/30 [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-black/20 [&::-webkit-scrollbar-track]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-stone-400/30 [&::-webkit-scrollbar-thumb]:rounded-lg hover:[&::-webkit-scrollbar-thumb]:bg-stone-400/50 md:px-1 md:pb-4 md:rounded-2xl">
+<!-- ROADMAP dla neuroatypowych - pastele, spokojne kolory -->
+<div class="w-full h-full relative dark:bg-gradient-to-b dark:from-[#0f0e0d] dark:via-stone-900 dark:to-[#0f0e0d] light:bg-gradient-to-b light:from-[#D4EAF7] light:via-[#B5E3FF] light:to-[#E8F4F8] rounded-3xl px-2 pb-6 overflow-y-auto overflow-x-hidden shadow-[0_10px_40px_rgba(126,200,227,0.3)] border-[6px] dark:border-stone-700/30 light:border-[#A7D8F0] [&::-webkit-scrollbar]:w-1.5 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track]:rounded-lg [&::-webkit-scrollbar-thumb]:dark:bg-stone-400/30 [&::-webkit-scrollbar-thumb]:light:bg-[#7EC8E3]/40 [&::-webkit-scrollbar-thumb]:rounded-lg hover:[&::-webkit-scrollbar-thumb]:bg-[#7EC8E3]/60 md:px-1 md:pb-4 md:rounded-2xl">
     <div class="relative w-full min-h-[1400px] pt-[clamp(5.5rem,10vw,6.5rem)] pb-10 md:min-h-[1200px] md:pt-[4.75rem] md:pb-8">
-        <div class="absolute top-[clamp(0.75rem,2vw,1.75rem)] right-[clamp(0.75rem,3vw,2rem)] flex items-center gap-3 px-5 py-3.5 rounded-[18px] bg-[rgba(24,23,22,0.92)] border border-stone-700/45 shadow-[0_12px_30px_rgba(0,0,0,0.45)] backdrop-blur-sm z-[6] md:top-4 md:right-4 md:px-4 md:py-3 md:gap-2.5">
+        <div class="absolute top-[clamp(0.75rem,2vw,1.75rem)] right-[clamp(0.75rem,3vw,2rem)] flex items-center gap-3 px-5 py-3.5 rounded-[18px] dark:bg-[rgba(24,23,22,0.92)] light:bg-white/95 border-[4px] dark:border-stone-700/45 light:border-[#A7D8F0] shadow-[0_12px_30px_rgba(126,200,227,0.3)] backdrop-blur-sm z-[6] md:top-4 md:right-4 md:px-4 md:py-3 md:gap-2.5">
             <div class="w-10 h-10 text-orange-500 transition-all duration-300 md:w-9 md:h-9" class:fire-flicker={dailyGoalCompleted} style="filter: drop-shadow(0 2px 8px rgba(249, 115, 22, 0.4));">
                 <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full">
                     <path d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
                     <path d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z" />
                 </svg>
             </div>
-            <span class="font-['Lato'] text-[2rem] font-bold text-stone-50 leading-none md:text-[1.75rem]" style="text-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);">{currentStreak}</span>
+            <span class="font-['Lato'] text-[2rem] font-bold dark:text-stone-50 light:text-slate-900 leading-none md:text-[1.75rem]" style="text-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);">{currentStreak}</span>
         </div>
 
         <!-- Main curved path line -->
@@ -180,7 +181,7 @@
             <!-- Dynamically generated curved path -->
             <path
                 d={fullPathD}
-                class="stroke-[rgba(87,83,78,0.3)] stroke-[3] transition-all duration-500 md:stroke-[2.5]"
+                class="dark:stroke-[rgba(87,83,78,0.3)] light:stroke-[#A7D8F0] stroke-[3] transition-all duration-500 md:stroke-[2.5]"
                 fill="none"
                 stroke-linecap="round"
             />
@@ -189,10 +190,10 @@
             {#if hasCompleted}
                 <path
                     d={completedPathD}
-                    class="stroke-green-500 stroke-[4] path-grow md:stroke-[3.5]"
+                    class="dark:stroke-green-500 light:stroke-[#5DADE2] stroke-[4] path-grow md:stroke-[3.5]"
                     fill="none"
                     stroke-linecap="round"
-                    style="filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.3));"
+                    style="filter: drop-shadow(0 0 8px rgba(93, 173, 226, 0.4));"
                 />
             {/if}
         </svg>
@@ -233,9 +234,9 @@
                     </div>
                 </div>
                 
-                <div class="absolute top-full left-1/2 -translate-x-1/2 -translate-y-1 bg-[rgba(28,25,23,0.98)] backdrop-blur-md rounded-lg px-4 py-2.5 min-w-[clamp(160px,38vw,200px)] max-w-[clamp(200px,48vw,260px)] text-center shadow-[0_10px_30px_rgba(0,0,0,0.5),0_0_1px_rgba(255,255,255,0.1)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 mt-2 border border-stone-700/40 z-20 group-hover:translate-y-1.5 md:px-3.5 md:py-2 md:min-w-[140px] md:max-w-[180px] md:rounded-lg md:mt-1.5">
-                    <h3 class="font-['Lato'] text-[clamp(0.9rem,2.5vw,1.1rem)] font-bold text-stone-100 mb-2">{step.title}</h3>
-                    <p class="text-[clamp(0.8rem,2vw,0.9rem)] text-stone-300 leading-relaxed">{step.description}</p>
+                <div class="absolute top-full left-1/2 -translate-x-1/2 -translate-y-1 dark:bg-[rgba(28,25,23,0.98)] light:bg-white/98 backdrop-blur-md rounded-lg px-4 py-2.5 min-w-[clamp(160px,38vw,200px)] max-w-[clamp(200px,48vw,260px)] text-center shadow-[0_10px_30px_rgba(126,200,227,0.4)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 mt-2 border-[3px] dark:border-stone-700/40 light:border-[#A7D8F0] z-20 group-hover:translate-y-1.5 md:px-3.5 md:py-2 md:min-w-[140px] md:max-w-[180px] md:rounded-lg md:mt-1.5">
+                    <h3 class="font-['Lato'] text-[clamp(0.9rem,2.5vw,1.1rem)] font-bold dark:text-stone-100 light:text-slate-900 mb-2">{step.title}</h3>
+                    <p class="text-[clamp(0.8rem,2vw,0.9rem)] dark:text-stone-300 light:text-slate-700 leading-relaxed">{step.description}</p>
                 </div>
             </div>
         {/each}

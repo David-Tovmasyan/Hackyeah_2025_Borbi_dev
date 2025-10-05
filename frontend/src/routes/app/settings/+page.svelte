@@ -1,4 +1,6 @@
 <script lang="ts">
+    import olaf1 from '$lib/assets/gif/olaf1.gif';
+    
     let notifications = $state(true);
     let dailyReminder = $state(true);
     let reminderTime = $state("09:00");
@@ -11,22 +13,25 @@
 </script>
 
 <div class="w-full max-w-4xl mx-auto p-6 space-y-6">
-    <!-- Header -->
+    <!-- Header with Olaf -->
     <div class="flex items-center justify-between">
-        <h1 class="font-['Lato'] text-3xl font-bold text-stone-50">
-            Settings
-        </h1>
-        <div class="px-4 py-2 bg-gradient-to-r from-gray-500/20 to-stone-500/20 rounded-full border border-gray-500/30">
-            <span class="font-['Lato'] text-sm text-gray-300">
-                Customize your experience
+        <div class="flex items-center gap-4">
+            <img src={olaf1} alt="Olaf" class="w-16 h-16 object-contain rounded-full" />
+            <h1 class="font-['Lato'] text-3xl font-bold dark:text-stone-50 light:text-slate-900">
+                Ustawienia ⚙️
+            </h1>
+        </div>
+        <div class="px-4 py-2 dark:bg-gradient-to-r dark:from-gray-500/20 dark:to-stone-500/20 light:bg-[#B5E3FF] rounded-full border-[4px] dark:border-gray-500/30 light:border-[#A7D8F0]">
+            <span class="font-['Lato'] text-sm dark:text-gray-300 light:text-slate-900 font-bold">
+                Dostosuj aplikację
             </span>
         </div>
     </div>
 
     <!-- Account Section -->
-    <div class="bg-gradient-to-br from-stone-900/80 to-stone-800/80 backdrop-blur-sm border border-stone-700/50 rounded-2xl p-6 space-y-6">
-        <h2 class="font-['Lato'] text-xl font-bold text-stone-50 flex items-center gap-2">
-            <svg class="w-6 h-6 text-blue-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+    <div class="dark:bg-gradient-to-br dark:from-stone-900/80 dark:to-stone-800/80 light:bg-white/80 backdrop-blur-sm border-[4px] dark:border-stone-700/50 light:border-[#A7D8F0] rounded-2xl p-6 space-y-6">
+        <h2 class="font-['Lato'] text-xl font-bold dark:text-stone-50 light:text-slate-900 flex items-center gap-2">
+            <svg class="w-6 h-6 dark:text-blue-400 light:text-[#5DADE2]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
             </svg>
             Account
@@ -216,7 +221,7 @@
             Data & Privacy
         </h2>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+        <div class="grid grid-cols-1 md:grid-cols   -2 gap-3">
             <button class="p-4 bg-stone-800/30 rounded-xl hover:bg-stone-800/50 transition-all duration-200 text-left group">
                 <p class="font-['Lato'] font-semibold text-stone-100 group-hover:text-blue-400 transition-colors">
                     Export Data

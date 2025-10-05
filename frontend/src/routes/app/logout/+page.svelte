@@ -1,5 +1,6 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import olaf2 from '$lib/assets/gif/olaf2.gif';
     
     let countdown = $state(3);
     
@@ -18,22 +19,20 @@
 
 <div class="w-full h-full flex items-center justify-center min-h-[80vh]">
     <div class="max-w-md w-full mx-auto p-8 space-y-8 text-center">
-        <!-- Icon -->
+        <!-- Olaf waving goodbye -->
         <div class="flex justify-center">
-            <div class="w-24 h-24 rounded-full bg-gradient-to-br from-red-500/20 to-orange-500/20 border border-red-500/30 flex items-center justify-center">
-                <svg class="w-12 h-12 text-red-400" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-                </svg>
+            <div class="w-32 h-32 rounded-full dark:bg-gradient-to-br dark:from-red-500/20 dark:to-orange-500/20 light:bg-[#FFE8D9] border-[6px] dark:border-red-500/30 light:border-[#FFB88C] flex items-center justify-center p-2">
+                <img src={olaf2} alt="Olaf says goodbye" class="w-full h-full object-contain" />
             </div>
         </div>
 
         <!-- Title -->
         <div class="space-y-3">
-            <h1 class="font-['Lato'] text-3xl font-bold text-stone-50">
-                Logging Out...
+            <h1 class="font-['Lato'] text-3xl font-bold dark:text-stone-50 light:text-slate-900">
+                Do zobaczenia! 👋
             </h1>
-            <p class="text-stone-400">
-                Thanks for using Seal Your Habits! See you soon.
+            <p class="dark:text-stone-400 light:text-slate-700">
+                Dziękujemy za używanie Seal Your Habits!
             </p>
         </div>
 
