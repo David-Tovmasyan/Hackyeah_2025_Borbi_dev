@@ -1,4 +1,5 @@
 <script lang="ts">
+    // Types based on UserQuest schema
     type UserQuest = {
         id: string; // UUID
         questId: string;
@@ -32,7 +33,7 @@
         completionPercentage: number; // 0-100% based on completed goals
     };
 
-    // Mock Quests data by category (UTF-8 emojis)
+    // Mock Quests data by category
     const sleepQuests: Quest[] = [
         { id: 'sleep1', title: '8 godzin snu', description: 'Śpij co najmniej 8 godzin', emoji: '💤', difficulty: 'medium', category: 'sleep' },
         { id: 'sleep2', title: 'Bez ekranów przed snem', description: '1h bez ekranów przed snem', emoji: '📵', difficulty: 'medium', category: 'sleep' },
@@ -57,7 +58,7 @@
         { id: 'activity5', title: 'Rozciąganie', description: '15min stretching', emoji: '🤸‍♀️', difficulty: 'easy', category: 'activity' }
     ];
 
-    // Mock UserQuests for 10 days - each day has 3 goals (sleep, diet, activity)
+    // Mock UserQuests for 5 days - each day has 3 goals (sleep, diet, activity)
     const mockUserQuests: UserQuest[] = [
         // Day 1 - All completed
         { id: 'day1-sleep', questId: 'sleep1', userId: 'user1', completed: true, date: new Date(2024, 9, 1) },
@@ -79,7 +80,7 @@
         { id: 'day4-diet', questId: 'diet4', userId: 'user1', completed: false, date: new Date(2024, 9, 4) },
         { id: 'day4-activity', questId: 'activity4', userId: 'user1', completed: false, date: new Date(2024, 9, 4) },
         
-        // Days 5-10 - Future days, not started
+        // Day 5 - Future day, not started
         { id: 'day5-sleep', questId: 'sleep5', userId: 'user1', completed: false, date: new Date(2024, 9, 5) },
         { id: 'day5-diet', questId: 'diet5', userId: 'user1', completed: false, date: new Date(2024, 9, 5) },
         { id: 'day5-activity', questId: 'activity5', userId: 'user1', completed: false, date: new Date(2024, 9, 5) }
