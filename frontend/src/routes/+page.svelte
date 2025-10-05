@@ -48,8 +48,8 @@
     <div class="min-h-screen bg-gradient-to-b from-[#E8F4F8] via-[#D1E7ED] to-[#B8DCE5] flex items-center justify-center p-8">
         <div class="flex flex-col items-center animate-fade-in">
             <!-- Speech Bubble - NA GÓRZE (naturalna kolejność czytania) -->
-            <div class="relative mb-12 animate-bounce-gentle">
-                <div class="bg-white px-12 py-6 rounded-full shadow-2xl border-[6px] border-sky-400 max-w-lg">
+            <div class="relative mb-12">
+                <div class="bg-white px-12 py-6 rounded-3xl shadow-2xl border-[6px] border-sky-400 max-w-lg">
                     <p class="font-['Lato'] text-3xl font-bold text-slate-900 text-center leading-relaxed">
                         Cześć! Jestem Olaf! 👋
                     </p>
@@ -84,7 +84,7 @@
     <!-- 
         EKRAN 2: Formularz z celami aktywności
         DESIGN DLA NEUROATYPOWYCH (ADHD, Autyzm, Dysleksja):
-        ✓ Tylko 2 pola (kroki + minuty) - nie przytłacza ilością informacji
+        ✓ Tylko 2 pola (kroki + godziny snu) - nie przytłacza ilością informacji
         ✓ Duże inputy (py-4, text-xl) - łatwe kliknięcie i wpisanie
         ✓ Wyraźne labele z emoji - wizualna pomoc w identyfikacji
         ✓ Wysokie kontrasty (WCAG AAA) - slate-900 na białym
