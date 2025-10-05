@@ -1,24 +1,32 @@
 import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 
-// Load theme from localStorage or default to dark
-const stored = browser ? localStorage.getItem('theme') : null;
-export const isDarkMode = writable<boolean>(stored ? stored === 'dark' : true);
+/*
+  🎨 NEUROATYPICAL DESIGN GUIDE - Theme Store
+  
+  ✅ Tylko jasne kolory - bez trybu ciemnego
+  ✅ Pastele i niebieskie tony - spokojne dla zmysłów  
+  ✅ Wysokie kontrasty - WCAG AAA
+  
+  Aplikacja używa wyłącznie jasnej, przyjaznej palety kolorów
+  zgodnie z wytycznymi dla osób neuroatypowych.
+*/
 
-// Subscribe to changes and update localStorage + html class
-isDarkMode.subscribe(value => {
+// Aplikacja używa tylko jasnego trybu - Design Guide requirement
+export const isDarkMode = writable<boolean>(false);
+
+// Theme jest zawsze jasny - dla komfortu osób neuroatypowych
+isDarkMode.subscribe(() => {
     if (browser) {
-        localStorage.setItem('theme', value ? 'dark' : 'light');
-        if (value) {
-            document.documentElement.classList.add('dark');
-            document.documentElement.classList.remove('light');
-        } else {
-            document.documentElement.classList.remove('dark');
-            document.documentElement.classList.add('light');
-        }
+        // Zawsze ustawiamy jasny tryb
+        localStorage.setItem('theme', 'light');
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
     }
 });
 
+// Toggle zachowany dla kompatybilności, ale zawsze pozostaje jasny
 export function toggleTheme() {
-    isDarkMode.update(v => !v);
+    console.log('🎨 Aplikacja używa tylko jasnych kolorów zgodnie z NEUROATYPICAL_DESIGN_GUIDE');
+    // Nie zmieniamy trybu - zawsze jasny
 }

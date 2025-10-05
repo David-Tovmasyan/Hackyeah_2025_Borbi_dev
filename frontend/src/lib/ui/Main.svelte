@@ -6,7 +6,7 @@
 
 <div class="
     min-h-screen w-full
-    bg-stone-800
+    bg-gradient-to-br from-[#E8F4F8] via-[#D1E7ED] to-[#B8DCE5]
     flex flex-col md:flex-row
     relative
 "
