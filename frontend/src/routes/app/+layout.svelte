@@ -45,7 +45,7 @@
             <div class="bg-white rounded-3xl shadow-2xl border-[6px] border-[#A7D8F0] p-12 text-center">
                 <div class="text-6xl mb-4">🔄</div>
                 <div class="font-['Lato'] text-2xl font-bold text-slate-900">
-                    Ładowanie...
+                    Loading...
                 </div>
             </div>
         </div>
@@ -66,7 +66,7 @@
             <div class="bg-white rounded-3xl shadow-2xl border-[6px] border-[#A7D8F0] p-12 text-center">
                 <div class="text-6xl mb-4">🚪</div>
                 <div class="font-['Lato'] text-2xl font-bold text-slate-900">
-                    Przekierowanie do logowania...
+                    Redirecting to login...
                 </div>
             </div>
         </div>

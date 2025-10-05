@@ -20,7 +20,7 @@
             <div class="flex items-center gap-4">
                 <img src={olaf1} alt="Olaf" class="w-16 h-16 object-contain rounded-full border-[4px] border-[#A7D8F0]" />
                 <h1 class="font-['Lato'] text-2xl md:text-3xl font-bold text-slate-900">
-                    Ustawienia ⚙️
+                    Settings ⚙️
                 </h1>
             </div>
 
@@ -32,14 +32,14 @@
                 <svg class="w-7 h-7 text-[#5DADE2]" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                 </svg>
-                Konto
+                Account
             </h2>
 
             <div class="space-y-6">
                 <!-- Name -->
                 <div class="space-y-3">
                     <label for="name" class="block text-lg font-bold text-slate-900">
-                        👤 Wyświetlana nazwa
+                        👤 Display Name
                     </label>
                     <input
                         id="name"
@@ -66,7 +66,7 @@
 
                 <!-- Save Button -->
                 <button class="w-full px-6 py-4 bg-gradient-to-r from-[#7EC8E3] to-[#5DADE2] hover:from-[#6BB8D3] hover:to-[#4A9DD2] text-white font-['Lato'] text-xl font-bold rounded-3xl transition-all duration-200 hover:scale-105 shadow-2xl shadow-[#7EC8E3]/50 mt-8 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0]">
-                    Zapisz zmiany 💾
+                    Save Changes 💾
                 </button>
             </div>
     </div>
@@ -77,19 +77,19 @@
                 <svg class="w-7 h-7 text-orange-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
                 </svg>
-                Powiadomienia
+                Notifications
             </h2>
 
         <div class="space-y-4">
                 <!-- Enable Notifications -->
                 <div class="flex items-center justify-between p-6 bg-[#F0F9FF] rounded-2xl hover:bg-[#E8F4F8] transition-all duration-200 border-[4px] border-[#B5E3FF]">
                     <div class="space-y-2">
-                        <p class="font-['Lato'] font-bold text-slate-900 text-lg">🔔 Powiadomienia push</p>
-                        <p class="text-base text-slate-600">Otrzymuj powiadomienia o swoich postępach</p>
+                        <p class="font-['Lato'] font-bold text-slate-900 text-lg">🔔 Push Notifications</p>
+                        <p class="text-base text-slate-600">Receive notifications about your progress</p>
                     </div>
                     <button
                         onclick={() => notifications = !notifications}
-                        aria-label="Przełącz powiadomienia"
+                        aria-label="Toggle notifications"
                         class="relative w-16 h-9 rounded-full transition-all duration-200 border-[4px]"
                         class:bg-[#7EC8E3]={notifications}
                         class:border-[#5DADE2]={notifications}
@@ -107,7 +107,7 @@
                 <div class="flex items-center justify-between p-6 bg-[#F0F9FF] rounded-2xl hover:bg-[#E8F4F8] transition-all duration-200 border-[4px] border-[#B5E3FF]">
                     <div class="space-y-2">
                         <p class="font-['Lato'] font-bold text-slate-900 text-lg">⏰ Codzienne przypomnienie</p>
-                        <p class="text-base text-slate-600">Otrzymaj przypomnienie aby sprawdzić postępy</p>
+                        <p class="text-base text-slate-600">Get a reminder to check your progress</p>
                     </div>
                     <button
                         onclick={() => dailyReminder = !dailyReminder}
@@ -144,7 +144,7 @@
                 <div class="flex items-center justify-between p-6 bg-[#F0F9FF] rounded-2xl hover:bg-[#E8F4F8] transition-all duration-200 border-[4px] border-[#B5E3FF]">
                     <div class="space-y-2">
                         <p class="font-['Lato'] font-bold text-slate-900 text-lg">📈 Raport tygodniowy</p>
-                        <p class="text-base text-slate-600">Otrzymuj podsumowanie tygodnia w każdą niedzielę</p>
+                        <p class="text-base text-slate-600">Receive weekly summary every Sunday</p>
                     </div>
                     <button
                         onclick={() => weeklyReport = !weeklyReport}
@@ -177,8 +177,8 @@
                 <!-- Sound Effects -->
                 <div class="flex items-center justify-between p-6 bg-[#F0F9FF] rounded-2xl hover:bg-[#E8F4F8] transition-all duration-200 border-[4px] border-[#B5E3FF]">
                     <div class="space-y-2">
-                        <p class="font-['Lato'] font-bold text-slate-900 text-lg">🔊 Efekty dźwiękowe</p>
-                        <p class="text-base text-slate-600">Odtwarzaj dźwięki przy akcjach i osiągnięciach</p>
+                        <p class="font-['Lato'] font-bold text-slate-900 text-lg">🔊 Sound Effects</p>
+                        <p class="text-base text-slate-600">Play sounds for actions and achievements</p>
                     </div>
                     <button
                         onclick={() => soundEffects = !soundEffects}
@@ -200,7 +200,7 @@
                 <div class="flex items-center justify-between p-6 bg-[#F0F9FF] rounded-2xl hover:bg-[#E8F4F8] transition-all duration-200 border-[4px] border-[#B5E3FF]">
                     <div class="space-y-2">
                         <p class="font-['Lato'] font-bold text-slate-900 text-lg">📋 Widok kompaktowy</p>
-                        <p class="text-base text-slate-600">Pokaż więcej treści z mniejszymi odstępami</p>
+                        <p class="text-base text-slate-600">Show more content with smaller spacing</p>
                     </div>
                     <button
                         onclick={() => compactView = !compactView}
@@ -234,14 +234,14 @@
                     <p class="font-['Lato'] font-bold text-slate-900 group-hover:text-[#5DADE2] transition-colors text-lg">
                         📤 Eksportuj dane
                     </p>
-                    <p class="text-base text-slate-600 mt-2">Pobierz swoje dane o postępach</p>
+                    <p class="text-base text-slate-600 mt-2">Download your progress data</p>
                 </button>
 
                 <button class="p-6 bg-[#FFE8D9] border-[4px] border-[#FFB88C] rounded-2xl hover:bg-red-100 hover:border-red-400 transition-all duration-200 text-left group">
                     <p class="font-['Lato'] font-bold text-slate-900 group-hover:text-red-600 transition-colors text-lg">
-                        🗑️ Usuń konto
+                        🗑️ Delete Account
                     </p>
-                    <p class="text-base text-slate-600 mt-2">Trwale usuń swoje konto</p>
+                    <p class="text-base text-slate-600 mt-2">Permanently delete your account</p>
                 </button>
             </div>
         </div>
@@ -249,7 +249,7 @@
         <!-- App Info -->
         <div class="text-center text-base text-slate-600 space-y-2">
             <p class="font-['Lato'] font-bold">Seal Your Habits v1.0.0</p>
-            <p class="font-['Lato']">Stworzone z ❤️ dla lepszych nawyków</p>
+            <p class="font-['Lato']">Created with ❤️ for better habits</p>
         </div>
     </div>
 </div>

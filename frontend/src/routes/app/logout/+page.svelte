@@ -59,24 +59,24 @@
             onclick={() => window.location.href = '/app/roadmap'}
             class="px-8 py-4 bg-gradient-to-r from-[#7EC8E3] to-[#5DADE2] hover:from-[#6BB8D3] hover:to-[#4A9DD2] rounded-3xl text-white font-['Lato'] text-lg font-bold transition-all duration-200 hover:scale-105 shadow-2xl shadow-[#7EC8E3]/50 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0]"
         >
-            Anuluj wylogowanie
+            Cancel Logout
         </button>
 
         <!-- Stats Summary (Last session) -->
         <div class="bg-white/90 backdrop-blur-sm border-[6px] border-[#A7D8F0] rounded-3xl p-6 space-y-4 shadow-xl shadow-[#A7D8F0]/30">
-            <p class="text-base text-slate-700 font-['Lato'] font-bold">Twoje postępy w tej sesji:</p>
+            <p class="text-base text-slate-700 font-['Lato'] font-bold">Your progress in this session:</p>
             <div class="grid grid-cols-3 gap-3">
                 <div class="p-4 bg-[#F0F9FF] border-[4px] border-[#B5E3FF] rounded-2xl">
                     <p class="text-3xl font-bold text-orange-500">3</p>
-                    <p class="text-sm text-slate-600 font-['Lato'] font-semibold">Dni z rzędu</p>
+                    <p class="text-sm text-slate-600 font-['Lato'] font-semibold">Day Streak</p>
                 </div>
                 <div class="p-4 bg-[#F0F9FF] border-[4px] border-[#B5E3FF] rounded-2xl">
                     <p class="text-3xl font-bold text-green-500">3</p>
-                    <p class="text-sm text-slate-600 font-['Lato'] font-semibold">Osiągnięcia</p>
+                    <p class="text-sm text-slate-600 font-['Lato'] font-semibold">Achievements</p>
                 </div>
                 <div class="p-4 bg-[#F0F9FF] border-[4px] border-[#B5E3FF] rounded-2xl">
                     <p class="text-3xl font-bold text-[#5DADE2]">100%</p>
-                    <p class="text-sm text-slate-600 font-['Lato'] font-semibold">Ten tydzień</p>
+                    <p class="text-sm text-slate-600 font-['Lato'] font-semibold">This Week</p>
                 </div>
             </div>
         </div>

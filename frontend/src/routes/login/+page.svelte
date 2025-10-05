@@ -30,7 +30,7 @@
         e.preventDefault();
         
         if (!username.trim()) {
-            errorMessage = 'Wprowadź nazwę użytkownika';
+            errorMessage = 'Enter username';
             return;
         }
 
@@ -43,10 +43,10 @@
             if (success) {
                 goto('/app');
             } else {
-                errorMessage = 'Nie znaleziono użytkownika';
+                errorMessage = 'User not found';
             }
         } catch (error) {
-            errorMessage = 'Błąd podczas logowania. Spróbuj ponownie.';
+            errorMessage = 'Login error. Try again.';
             console.error('Login error:', error);
         } finally {
             isLoading = false;
@@ -86,16 +86,16 @@
             <div class="lg:w-1/2 w-full">
                 <div class="bg-white rounded-3xl shadow-2xl border-[6px] border-[#A7D8F0] p-8">
                     <h1 class="font-['Lato'] text-4xl font-bold text-slate-900 mb-4 text-center">
-                        Witaj z powrotem! 👋
+                        Welcome back! 👋
                     </h1>
                     <p class="font-['Lato'] text-lg text-slate-700 mb-8 text-center">
-                        Zaloguj się do swojego konta
+                        Log in to your account
                     </p>
                     
                     <form onsubmit={handleLogin} class="space-y-6">
                         <div>
                             <label for="username" class="block font-['Lato'] text-2xl font-bold text-slate-900 mb-3">
-                                👤 Nazwa użytkownika
+                                👤 Username
                             </label>
                             <input
                                 id="username"
@@ -122,7 +122,7 @@
                                 onclick={() => goto('/')}
                                 class="px-6 py-4 bg-white border-[6px] border-[#A7D8F0] text-slate-900 font-['Lato'] text-lg font-bold rounded-3xl transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0]"
                             >
-                                ← Strona główna
+                                ← Home
                             </button>
                             
                             <button
@@ -130,7 +130,7 @@
                                 disabled={isLoading}
                                 class="flex-1 px-6 py-4 bg-gradient-to-r from-[#7EC8E3] to-[#5DADE2] hover:from-[#6BB8D3] hover:to-[#4A9DD2] text-white font-['Lato'] text-xl font-bold rounded-3xl transition-all duration-200 hover:scale-105 shadow-2xl shadow-[#7EC8E3]/50 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0] disabled:opacity-50 disabled:cursor-not-allowed"
                             >
-                                {isLoading ? '🔄 Logowanie...' : '🚀 Zaloguj się'}
+                                {isLoading ? '🔄 Logging in...' : '🚀 Log In'}
                             </button>
                         </div>
                     </form>
@@ -165,7 +165,7 @@
                         <p class="font-['Lato'] text-base text-slate-600">
                             Nie masz konta? 
                             <a href="/" class="text-[#5DADE2] font-bold hover:text-[#4A9DD2] transition-colors">
-                                Rozpocznij onboarding
+                                Start Onboarding
                             </a>
                         </p>
                     </div>

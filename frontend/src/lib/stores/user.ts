@@ -21,15 +21,15 @@ export interface User {
 
 // Mock dane użytkownika dla testowania
 const mockUser: User = {
-    id: 'mock-user-123',
-    username: 'Testowy Użytkownik',
-    hp: 85,
-    xp: 1250,
-    spentPrestige: 2,
-    level: 6, // xp/200 = level
-    streak: 12, // Dni z rzędu
+    id: '123e4567-e89b-12d3-a456-426614174000',
+    username: 'user',
+    hp: 100,
+    xp: 1150,
+    spentPrestige: 0,
+    level: 5, // xp/200 = level (1150/200 = 5.75 ≈ 6)
+    streak: 15, // Dni z rzędu - realistyczny streak
     dailyProgress: {
-        steps: 7500,
+        steps: 8500,
         stepsGoal: 10000,
         water: 6,
         waterGoal: 8,
@@ -49,6 +49,12 @@ export async function initializeUser() {
     
     if (!storedUsername) {
         console.log('ℹ️ Brak zalogowanego użytkownika');
+        // W development mode - użyj mock usera
+        if (import.meta.env.DEV) {
+            console.log('🧪 DEV MODE: Using mock user');
+            currentUser.set(mockUser);
+            return true;
+        }
         return false;
     }
     
@@ -58,7 +64,13 @@ export async function initializeUser() {
         const success = await loginUserWithAPI(storedUsername);
         
         if (!success) {
-            console.log('❌ Nie można było ponownie zalogować użytkownika, czyszczenie danych');
+            console.log('❌ Nie można było ponownie zalogować użytkownika');
+            // W development mode - użyj mock usera jako fallback
+            if (import.meta.env.DEV) {
+                console.log('🧪 DEV MODE: Falling back to mock user');
+                currentUser.set(mockUser);
+                return true;
+            }
             logoutUser();
             return false;
         }
@@ -67,6 +79,12 @@ export async function initializeUser() {
         return true;
     } catch (error) {
         console.error('❌ Błąd podczas inicjalizacji użytkownika:', error);
+        // W development mode - użyj mock usera jako fallback
+        if (import.meta.env.DEV) {
+            console.log('🧪 DEV MODE: Error, falling back to mock user');
+            currentUser.set(mockUser);
+            return true;
+        }
         logoutUser();
         return false;
     }

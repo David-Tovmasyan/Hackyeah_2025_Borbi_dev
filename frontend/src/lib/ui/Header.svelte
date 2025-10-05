@@ -4,7 +4,7 @@
 
     // Dane użytkownika z store
     $: user = $currentUser || {
-        username: 'Użytkownik',
+        username: 'User',
         level: 1,
         xp: 0
     };

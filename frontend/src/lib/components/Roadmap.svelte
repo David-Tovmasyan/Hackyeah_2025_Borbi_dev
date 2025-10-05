@@ -251,8 +251,8 @@
 </script>
 
 <!-- ROADMAP dla neuroatypowych - pastele, spokojne kolory -->
-<div class="w-full h-full relative bg-gradient-to-b from-[#E8F4F8] via-[#D1E7ED] to-[#B8DCE5] rounded-3xl px-4 pb-8 overflow-y-auto overflow-x-hidden shadow-[0_10px_40px_rgba(167,216,240,0.4)] border-[6px] border-[#A7D8F0] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-[#7EC8E3]/50 [&::-webkit-scrollbar-thumb]:rounded-lg hover:[&::-webkit-scrollbar-thumb]:bg-[#7EC8E3]/70 md:px-6 md:pb-10 md:rounded-3xl">
-    <div class="relative w-full min-h-[1800px] pt-[clamp(6rem,12vw,8rem)] pb-12 md:min-h-[1600px] md:pt-[6rem] md:pb-10">
+<div class="w-full h-full relative bg-gradient-to-b from-[#E8F4F8] via-[#D1E7ED] to-[#B8DCE5] rounded-3xl px-4 pb-6 overflow-y-auto overflow-x-hidden shadow-[0_10px_40px_rgba(167,216,240,0.4)] border-[6px] border-[#A7D8F0] [&::-webkit-scrollbar]:w-2 [&::-webkit-scrollbar-track]:bg-transparent [&::-webkit-scrollbar-track]:rounded-lg [&::-webkit-scrollbar-thumb]:bg-[#7EC8E3]/50 [&::-webkit-scrollbar-thumb]:rounded-lg hover:[&::-webkit-scrollbar-thumb]:bg-[#7EC8E3]/70 md:px-6 md:pb-8 md:rounded-3xl">
+    <div class="relative w-full min-h-[1200px] pt-[clamp(4rem,8vw,5rem)] pb-8 md:min-h-[1000px] md:pt-[4rem] md:pb-6">
         <div class="absolute top-[clamp(0.75rem,2vw,1.75rem)] right-[clamp(0.75rem,3vw,2rem)] flex items-center gap-3 px-5 py-3.5 rounded-[18px] bg-white/95 border-[4px] border-[#A7D8F0] shadow-[0_12px_30px_rgba(167,216,240,0.4)] backdrop-blur-sm z-[6] md:top-4 md:right-4 md:px-4 md:py-3 md:gap-2.5">
             <div class="w-10 h-10 text-orange-500 transition-all duration-300 md:w-9 md:h-9" class:fire-flicker={dailyGoalCompleted} style="filter: drop-shadow(0 2px 8px rgba(249, 115, 22, 0.4));">
                 <svg viewBox="0 0 24 24" fill="currentColor" class="w-full h-full">
@@ -299,69 +299,65 @@
                 aria-label="Dzień {step.dayNumber}: {step.completionPercentage}% ukończone"
             >
                 <div 
-                    class="w-[clamp(5rem,12vw,7rem)] h-[clamp(5rem,12vw,7rem)] rounded-full flex items-center justify-center relative transition-all duration-[250ms] border-b-6 border-transparent box-border"
+                    class="w-[clamp(3.5rem,8vw,4.5rem)] h-[clamp(3.5rem,8vw,4.5rem)] rounded-full flex items-center justify-center relative transition-all duration-[250ms] border-b-4 border-transparent box-border"
                     class:step-completed={step.status === 'completed'}
                     class:step-current={step.status === 'current'}
                     class:step-locked={step.status === 'locked'}
                     class:step-today-hover={step.isToday}
                 >
                     <div class="flex items-center justify-center w-full h-full text-white">
-                        {#if step.status === 'completed'}
-                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" style="filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));">
-                                <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-                            </svg>
-                        {:else if step.status === 'locked'}
-                            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="none" style="filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.3));">
-                                <rect x="3" y="11" width="18" height="11" rx="2" ry="2" stroke="currentColor" stroke-width="2"/>
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4" stroke="currentColor" stroke-width="2"/>
-                            </svg>
-                        {:else}
-                            <!-- Show day number and progress -->
-                            <div class="flex flex-col items-center justify-center">
-                                <span class="font-['Lato'] text-[clamp(1rem,3vw,1.2rem)] font-bold text-white" style="text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">{step.dayNumber}</span>
-                                {#if step.completionPercentage > 0 && step.completionPercentage < 100}
-                                    <div class="w-8 h-1 bg-white/30 rounded-full mt-1 overflow-hidden">
-                                        <div class="h-full bg-white rounded-full transition-all duration-300" style="width: {step.completionPercentage}%"></div>
-                                    </div>
-                                {/if}
-                            </div>
-                        {/if}
+                        <!-- Zawsze pokaż numer kroku -->
+                        <div class="flex flex-col items-center justify-center">
+                            <span class="font-['Lato'] text-[clamp(0.8rem,2.5vw,1rem)] font-bold text-white" style="text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);">{step.dayNumber}</span>
+                            {#if step.status === 'current' && step.completionPercentage > 0 && step.completionPercentage < 100}
+                                <div class="w-6 h-0.5 bg-white/30 rounded-full mt-0.5 overflow-hidden">
+                                    <div class="h-full bg-white rounded-full transition-all duration-300" style="width: {step.completionPercentage}%"></div>
+                                </div>
+                            {:else if step.status === 'completed'}
+                                <!-- Mała ikona checkmark pod numerem dla ukończonych -->
+                                <div class="mt-0.5">
+                                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" style="filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));">
+                                        <path d="M20 6L9 17L4 12" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+                                    </svg>
+                                </div>
+                            {/if}
+                        </div>
                     </div>
                 </div>
                 
-                <div class="absolute top-full left-1/2 -translate-x-1/2 -translate-y-1 bg-white/98 backdrop-blur-md rounded-2xl px-8 py-6 min-w-[clamp(300px,45vw,400px)] max-w-[clamp(350px,55vw,450px)] text-left shadow-[0_15px_40px_rgba(167,216,240,0.6)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 mt-4 border-[4px] border-[#A7D8F0] z-30 group-hover:translate-y-2 md:px-6 md:py-5 md:min-w-[320px] md:max-w-[400px] md:rounded-xl md:mt-3">
-                    <h3 class="font-['Lato'] text-[clamp(1.5rem,4vw,2rem)] font-bold text-slate-900 mb-4 text-center">Dzień {step.dayNumber}</h3>
+                <div class="absolute top-full left-1/2 -translate-x-1/2 -translate-y-1 bg-white/98 backdrop-blur-md rounded-xl px-4 py-3 min-w-[clamp(250px,35vw,320px)] max-w-[clamp(280px,40vw,350px)] text-left shadow-[0_10px_25px_rgba(167,216,240,0.6)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 mt-2 border-2 border-[#A7D8F0] z-30 group-hover:translate-y-1">
+                    <h3 class="font-['Lato'] text-lg font-bold text-slate-900 mb-2 text-center">Day {step.dayNumber}</h3>
                     
                     <!-- Daily goals progress -->
-                    <div class="space-y-2 mb-3">
+                    <div class="space-y-1 mb-2">
                         {#each Object.entries(step.dayGoals) as [categoryKey, userQuest]}
                             {@const category = categoryKey as 'sleep' | 'diet' | 'activity'}
                             {@const quest = allQuests.find(q => q.id === userQuest.questId)}
                             {#if quest}
-                                <div class="flex items-center gap-4 text-base py-2 px-3 rounded-xl bg-[#F0F9FF] border border-[#B5E3FF]">
-                                    <div class="flex items-center gap-3 flex-1">
-                                        <span class="text-2xl">{quest.emoji}</span>
+                                <div class="flex items-center gap-2 text-sm py-1.5 px-2 rounded-lg bg-[#F0F9FF] border border-[#B5E3FF]">
+                                    <div class="flex items-center gap-2 flex-1">
+                                        <span class="text-lg">{quest.emoji}</span>
                                         <div class="flex-1">
-                                            <span class="font-bold text-slate-800 text-lg block">{quest.title}</span>
-                                            <span class="text-sm text-slate-600">{quest.description}</span>
+                                            <span class="font-bold text-slate-800 text-sm block">{quest.title}</span>
+                                            <span class="text-xs text-slate-600">{quest.description}</span>
                                         </div>
                                     </div>
                                     <div class="ml-auto">
                                         {#if userQuest.completed}
-                                            <div class="w-8 h-8 bg-[#86efac] border-2 border-[#4ade80] rounded-full flex items-center justify-center">
-                                                <span class="text-white font-bold text-lg">✓</span>
+                                            <div class="w-6 h-6 bg-[#86efac] border-2 border-[#4ade80] rounded-full flex items-center justify-center">
+                                                <span class="text-white font-bold text-sm">✓</span>
                                             </div>
                                         {:else if step.isToday}
                                             <button 
-                                                class="w-8 h-8 border-3 border-[#A7D8F0] rounded-lg hover:border-[#7EC8E3] hover:bg-[#F0F9FF] transition-all duration-200 flex items-center justify-center"
+                                                class="w-6 h-6 border-2 border-[#A7D8F0] rounded-md hover:border-[#7EC8E3] hover:bg-[#F0F9FF] transition-all duration-200 flex items-center justify-center"
                                                 aria-label="Oznacz {quest.title} jako wykonane"
                                                 on:click|stopPropagation={() => toggleGoal(step, category)}
                                             >
-                                                <span class="text-[#7EC8E3] text-lg">+</span>
+                                                <span class="text-[#7EC8E3] text-sm">+</span>
                                             </button>
                                         {:else}
-                                            <div class="w-8 h-8 border-2 border-[#D4EAF7] rounded-full flex items-center justify-center">
-                                                <span class="text-[#A7D8F0] text-lg">◯</span>
+                                            <div class="w-6 h-6 border-2 border-[#D4EAF7] rounded-full flex items-center justify-center">
+                                                <span class="text-[#A7D8F0] text-sm">◯</span>
                                             </div>
                                         {/if}
                                     </div>
@@ -371,8 +367,8 @@
                     </div>
                     
                     <!-- Progress indicator -->
-                    <div class="flex items-center gap-4 mt-4 pt-4 border-t border-[#B5E3FF]">
-                        <div class="flex-1 h-4 bg-[#E8F4F8] rounded-full overflow-hidden border border-[#A7D8F0]">
+                    <div class="flex items-center gap-2 mt-2 pt-2 border-t border-[#B5E3FF]">
+                        <div class="flex-1 h-2 bg-[#E8F4F8] rounded-full overflow-hidden border border-[#A7D8F0]">
                             <div 
                                 class="h-full rounded-full transition-all duration-500 shadow-inner"
                                 class:bg-[#86efac]={step.completionPercentage === 100}
@@ -383,7 +379,7 @@
                                 style="width: {step.completionPercentage}%"
                             ></div>
                         </div>
-                        <span class="text-lg font-bold text-slate-700 min-w-[3rem] text-center">
+                        <span class="text-sm font-bold text-slate-700 min-w-[2rem] text-center">
                             {Math.round(step.completionPercentage)}%
                         </span>
                     </div>

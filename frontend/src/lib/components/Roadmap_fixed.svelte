@@ -348,7 +348,7 @@
                 </div>
                 
                 <div class="absolute top-full left-1/2 -translate-x-1/2 -translate-y-1 bg-white/98 backdrop-blur-md rounded-2xl px-8 py-6 min-w-[clamp(300px,45vw,400px)] max-w-[clamp(350px,55vw,450px)] text-left shadow-[0_15px_40px_rgba(167,216,240,0.6)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 mt-4 border-[4px] border-[#A7D8F0] z-30 group-hover:translate-y-2 md:px-6 md:py-5 md:min-w-[320px] md:max-w-[400px] md:rounded-xl md:mt-3">
-                    <h3 class="font-['Lato'] text-[clamp(1.5rem,4vw,2rem)] font-bold text-slate-900 mb-4 text-center">Dzień {step.dayNumber}</h3>
+                    <h3 class="font-['Lato'] text-[clamp(1.5rem,4vw,2rem)] font-bold text-slate-900 mb-4 text-center">Day {step.dayNumber}</h3>
                     
                     <!-- Daily goals progress -->
                     <div class="space-y-2 mb-3">

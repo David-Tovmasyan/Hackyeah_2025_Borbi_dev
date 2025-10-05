@@ -118,14 +118,14 @@
             goto('/app');
         } catch (error) {
             console.error('Failed to create user:', error);
-            // W przypadku błędu, możemy pokazać komunikat lub spróbować ponownie
-            alert('Wystąpił błąd podczas zapisywania danych. Spróbuj ponownie.');
+            // In case of error, we can show a message or try again
+            alert('An error occurred while saving data. Please try again.');
         }
     }
 </script>
 
 <svelte:head>
-    <title>Seal Your Habits - Witaj!</title>
+        <title>Seal Your Habits - Welcome!</title>
 </svelte:head>
 
 {#if currentStep === 1}
@@ -135,11 +135,11 @@
             <div class="relative mb-12">
                 <div class="bg-white px-12 py-6 rounded-3xl shadow-2xl border-[6px] border-[#A7D8F0] max-w-lg">
                     <p class="font-['Lato'] text-3xl font-bold text-slate-900 text-center leading-relaxed">
-                        Cześć! Jestem Olaf! 👋
+                        Hi! I'm Olaf! 👋
                     </p>
                     <p class="font-['Lato'] text-xl font-semibold text-slate-800 mt-4 text-center leading-relaxed">
-                        Witam Cię w bezpiecznym miejscu,<br/>
-                        gdzie możesz być sobą!
+                        Welcome to a safe place,<br/>
+                        where you can be yourself!
                     </p>
                     <div class="absolute -bottom-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-white border-b-[6px] border-r-[6px] border-[#A7D8F0] transform rotate-45"></div>
                 </div>
@@ -148,8 +148,7 @@
             <button 
                 onclick={nextStep}
                 class="hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-[6px] focus:ring-[#7EC8E3] rounded-3xl"
-                aria-label="Kliknij Olafa aby przejść dalej"
-                autofocus
+                aria-label="Click Olaf to continue"
             >
                 <img 
                     src={olaf2} 
@@ -159,7 +158,7 @@
             </button>
             
             <p class="font-['Lato'] text-xl font-bold text-slate-700 mt-8 animate-pulse">
-                👆 Kliknij mnie! 
+                👆 Click me! 
             </p>
             
             <!-- Przycisk logowania -->
@@ -168,7 +167,7 @@
                     href="/login"
                     class="inline-block px-6 py-3 bg-white/80 border-[4px] border-[#A7D8F0] text-slate-900 font-['Lato'] text-lg font-bold rounded-3xl transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-[6px] focus:ring-[#7EC8E3] shadow-lg"
                 >
-                    🔑 Masz już konto? Zaloguj się
+                    🔑 Already have an account? Log in
                 </a>
             </div>
         </div>
@@ -197,34 +196,33 @@
                             <div class="flex items-start gap-4">
                                 <span class="text-4xl">🎯</span>
                                 <div>
-                                    <h3 class="font-['Lato'] text-xl font-bold text-slate-900 mb-2">Śledź swoje cele</h3>
-                                    <p class="font-['Lato'] text-lg text-slate-700">Monitoruj aktywność, dietę i sen w jednym miejscu</p>
+                                    <h3 class="font-['Lato'] text-xl font-bold text-slate-900 mb-2">Track your goals</h3>
+                                    <p class="font-['Lato'] text-lg text-slate-700">Monitor activity, diet and sleep in one place</p>
                                 </div>
                             </div>
                             
                             <div class="flex items-start gap-4">
                                 <span class="text-4xl">📊</span>
                                 <div>
-                                    <h3 class="font-['Lato'] text-xl font-bold text-slate-900 mb-2">Buduj nawyki</h3>
-                                    <p class="font-['Lato'] text-lg text-slate-700">Twórz pozytywne rutyny krok po kroku</p>
+                                    <h3 class="font-['Lato'] text-xl font-bold text-slate-900 mb-2">Build habits</h3>
+                                    <p class="font-['Lato'] text-lg text-slate-700">Build positive routines step by step</p>
                                 </div>
                             </div>
                             
                             <div class="flex items-start gap-4">
                                 <span class="text-4xl">🏆</span>
                                 <div>
-                                    <h3 class="font-['Lato'] text-xl font-bold text-slate-900 mb-2">Odblokowuj osiągnięcia</h3>
-                                    <p class="font-['Lato'] text-lg text-slate-700">Świętuj swoje sukcesy razem z Olafem!</p>
+                                    <h3 class="font-['Lato'] text-xl font-bold text-slate-900 mb-2">Unlock Achievements</h3>
+                                    <p class="font-['Lato'] text-lg text-slate-700">Celebrate your success with Olaf!</p>
                                 </div>
                             </div>
                         </div>
 
                         <button
                             onclick={nextStep}
-                            class="w-full px-6 py-4 bg-gradient-to-r from-[#7EC8E3] to-[#5DADE2] hover:from-[#6BB8D3] hover:to-[#4A9DD2] text-white font-['Lato'] text-xl font-bold rounded-3xl transition-all duration-200 hover:scale-105 shadow-2xl shadow-[#7EC8E3]/50 mt-8 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0]"
-                            autofocus
+                            class="w-full px-6 py-4 bg-gradient-to-r from-[#7EC8E3] to-[#5DADE2] hover:from-[#6BB8D3] hover:to-[#4A9DD2] text-white font-['Lato'] text-xl font-bold rounded-3xl transition-all duration-200 hover:scale-105 shadow-2xl shadow-[#7EC8E3]/50 mt-8 focus:outline-none focus:ring-[#6px] focus:ring-[#A7D8F0]"
                         >
-                            Dalej! 🚀
+                            Next! 🚀
                         </button>
                     </div>
                 </div>
@@ -251,38 +249,36 @@
                             Poznajmy się! 😊
                         </h2>
                         <p class="font-['Lato'] text-lg text-slate-700 mb-8 text-center">
-                            Jak mam się do Ciebie zwracać?
+                            What should I call you?
                         </p>
                         
                         <form onsubmit={handleNameSubmit} class="space-y-6">
+                            <!-- svelte-ignore element_implicitly_closed -->
                             <div>
                                 <label for="name" class="block font-['Lato'] text-2xl font-bold text-slate-900 mb-3">
-                                    👤 Twoje imię
+                                    👤 Your name
                                 </label>
                                 <input
                                     id="name"
                                     type="text"
                                     bind:value={formData.name}
-                                    placeholder="np. Anna"
+                                    placeholder="For example, John"
                                     class="w-full px-6 py-4 border-[6px] border-[#B5E3FF] rounded-3xl font-['Lato'] text-xl text-slate-900 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0] focus:border-[#A7D8F0] transition-all bg-[#F0F9FF]"
                                     required
-                                    autofocus
                                 />
-                            </div>
-
-                            <div class="flex gap-4">
+                            <div class="flex gap-4 mt-6">
                                 <button
                                     type="button"
                                     onclick={prevStep}
                                     class="px-6 py-4 bg-white border-[6px] border-[#A7D8F0] text-slate-900 font-['Lato'] text-lg font-bold rounded-3xl transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0]"
                                 >
-                                    ← Wstecz
+                                    ← Back
                                 </button>
                                 <button
                                     type="submit"
                                     class="flex-1 px-6 py-4 bg-gradient-to-r from-[#7EC8E3] to-[#5DADE2] hover:from-[#6BB8D3] hover:to-[#4A9DD2] text-white font-['Lato'] text-xl font-bold rounded-3xl transition-all duration-200 hover:scale-105 shadow-2xl shadow-[#7EC8E3]/50 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0]"
                                 >
-                                    Dalej! 🎯
+                                    Next! 🎯
                                 </button>
                             </div>
                         </form>
@@ -308,16 +304,20 @@
                 <div class="lg:w-1/2 w-full">
                     <div class="bg-white rounded-3xl shadow-2xl border-[6px] border-[#A7D8F0] p-8">
                         <h2 class="font-['Lato'] text-3xl font-bold text-slate-900 mb-4 text-center">
-                            Aktywność fizyczna 🏃
+                            Physical activity 🏃
                         </h2>
                         <p class="font-['Lato'] text-lg text-slate-700 mb-8 text-center">
-                            Ile kroków chcesz dziennie zrobić?
+                            How many steps do you want to take daily?
                         </p>
                         
                         <form onsubmit={handleActivitySubmit} class="space-y-6">
+                            <!-- svelte-ignore element_implicitly_closed -->
+                            <div>
+                                <!-- svelte-ignore element_implicitly_closed -->
+                                <label for="stepsGoal" class="block font-['Lato'] text-2xl font-bold text-slate-900 mb-3">
                             <div>
                                 <label for="stepsGoal" class="block font-['Lato'] text-2xl font-bold text-slate-900 mb-3">
-                                    🚶 Cel kroków
+                                    🚶 Steps goal
                                 </label>
                                 <input
                                     id="stepsGoal"
@@ -327,26 +327,22 @@
                                     step="100"
                                     class="w-full px-6 py-4 border-[6px] border-[#B5E3FF] rounded-3xl font-['Lato'] text-xl text-slate-900 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0] focus:border-[#A7D8F0] transition-all bg-[#F0F9FF]"
                                     required
-                                    autofocus
                                 />
-                                <p class="font-['Lato'] text-base text-slate-600 mt-3 ml-2">
-                                    💡 Rekomendowane: 10 000 kroków dziennie
-                                </p>
                             </div>
 
-                            <div class="flex gap-4">
+                            <div class="flex gap-4 mt-6">
                                 <button
                                     type="button"
                                     onclick={prevStep}
                                     class="px-6 py-4 bg-white border-[6px] border-[#A7D8F0] text-slate-900 font-['Lato'] text-lg font-bold rounded-3xl transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0]"
                                 >
-                                    ← Wstecz
+                                    ← Back
                                 </button>
                                 <button
                                     type="submit"
                                     class="flex-1 px-6 py-4 bg-gradient-to-r from-[#7EC8E3] to-[#5DADE2] hover:from-[#6BB8D3] hover:to-[#4A9DD2] text-white font-['Lato'] text-xl font-bold rounded-3xl transition-all duration-200 hover:scale-105 shadow-2xl shadow-[#7EC8E3]/50 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0]"
                                 >
-                                    Dalej! 💪
+                                    Next! 💪
                                 </button>
                             </div>
                         </form>
@@ -372,16 +368,16 @@
                 <div class="lg:w-1/2 w-full">
                     <div class="bg-white rounded-3xl shadow-2xl border-[6px] border-[#A7D8F0] p-8">
                         <h2 class="font-['Lato'] text-3xl font-bold text-slate-900 mb-4 text-center">
-                            Zdrowe odżywianie 🥗
+                            Healthy Eating 🥗
                         </h2>
                         <p class="font-['Lato'] text-lg text-slate-700 mb-8 text-center">
-                            Jak regularnie jesz?
+                            How regularly do you eat?
                         </p>
                         
                         <form onsubmit={handleDietSubmit} class="space-y-6">
                             <div>
                                 <label for="eatingRegularity" class="block font-['Lato'] text-2xl font-bold text-slate-900 mb-3">
-                                    🍽️ Regularność posiłków
+                                    🍽️ Meal Regularity
                                 </label>
                                 <select
                                     id="eatingRegularity"
@@ -389,15 +385,15 @@
                                     class="w-full px-6 py-4 border-[6px] border-[#B5E3FF] rounded-3xl font-['Lato'] text-xl text-slate-900 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0] focus:border-[#A7D8F0] transition-all bg-[#F0F9FF]"
                                     required
                                 >
-                                    <option value="">Wybierz opcję...</option>
-                                    <option value="irregular">Nieregularnie - jem kiedy przypomę sobie</option>
-                                    <option value="sometimes">Czasami regularnie - zależy od dnia</option>
-                                    <option value="mostly">Przeważnie regularnie - 2-3 posiłki dziennie</option>
-                                    <option value="regular">Bardzo regularnie - ustalone godziny posiłków</option>
-                                    <option value="planned">Mam szczegółowy plan żywieniowy</option>
+                                    <option value="">Choose an option...</option>
+                                    <option value="irregular">Irregularly - I eat when I remember</option>
+                                    <option value="sometimes">Sometimes regularly - depends on the day</option>
+                                    <option value="mostly">Mostly regularly - 2-3 meals daily</option>
+                                    <option value="regular">Very regularly - fixed meal times</option>
+                                    <option value="planned">I have a detailed meal plan</option>
                                 </select>
                                 <p class="font-['Lato'] text-base text-slate-600 mt-3 ml-2">
-                                    💡 Pomożemy Ci ustalić regularny harmonogram posiłków!
+                                    💡 We'll help you establish a regular meal schedule!
                                 </p>
                             </div>
 
@@ -407,13 +403,13 @@
                                     onclick={prevStep}
                                     class="px-6 py-4 bg-white border-[6px] border-[#A7D8F0] text-slate-900 font-['Lato'] text-lg font-bold rounded-3xl transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0]"
                                 >
-                                    ← Wstecz
+                                    ← Back
                                 </button>
                                 <button
                                     type="submit"
                                     class="flex-1 px-6 py-4 bg-gradient-to-r from-[#7EC8E3] to-[#5DADE2] hover:from-[#6BB8D3] hover:to-[#4A9DD2] text-white font-['Lato'] text-xl font-bold rounded-3xl transition-all duration-200 hover:scale-105 shadow-2xl shadow-[#7EC8E3]/50 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0]"
                                 >
-                                    Dalej! 🥕
+                                    Next! 🥕
                                 </button>
                             </div>
                         </form>
@@ -439,16 +435,16 @@
                 <div class="lg:w-1/2 w-full">
                     <div class="bg-white rounded-3xl shadow-2xl border-[6px] border-[#A7D8F0] p-8">
                         <h2 class="font-['Lato'] text-3xl font-bold text-slate-900 mb-4 text-center">
-                            Regeneracja 😴
+                            Rest & Recovery 😴
                         </h2>
                         <p class="font-['Lato'] text-lg text-slate-700 mb-8 text-center">
-                            Jak wygląda Twój rytm snu?
+                            What's your sleep rhythm?
                         </p>
                         
                         <form onsubmit={handleSleepSubmit} class="space-y-6">
                             <div>
                                 <label for="sleepRegularity" class="block font-['Lato'] text-2xl font-bold text-slate-900 mb-3">
-                                    🌙 Regularność snu
+                                    🌙 Sleep Regularity
                                 </label>
                                 <select
                                     id="sleepRegularity"
@@ -456,15 +452,15 @@
                                     class="w-full px-6 py-4 border-[6px] border-[#B5E3FF] rounded-3xl font-['Lato'] text-xl text-slate-900 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0] focus:border-[#A7D8F0] transition-all bg-[#F0F9FF]"
                                     required
                                 >
-                                    <option value="">Wybierz opcję...</option>
-                                    <option value="irregular">Nieregularnie - różne godziny każdego dnia</option>
-                                    <option value="mostly-regular">W miarę regularnie - podobne godziny w tygodniu</option>
-                                    <option value="regular">Regularnie - stałe godziny kładzenia się</option>
-                                    <option value="very-regular">Bardzo regularnie - zawsze o tej samej porze</option>
-                                    <option value="shift-work">Praca zmianowa - zmienne godziny ze względu na pracę</option>
+                                    <option value="">Choose an option...</option>
+                                    <option value="irregular">Irregularly - different hours every day</option>
+                                    <option value="mostly-regular">Fairly regularly - similar hours during the week</option>
+                                    <option value="regular">Regularly - fixed bedtime</option>
+                                    <option value="very-regular">Very regularly - always at the same time</option>
+                                    <option value="shift-work">Shift work - variable hours due to work</option>
                                 </select>
                                 <p class="font-['Lato'] text-base text-slate-600 mt-3 ml-2">
-                                    💡 Pomożemy Ci ustalić idealny harmonogram snu!
+                                    💡 We'll help you establish an ideal sleep schedule!
                                 </p>
                             </div>
 
@@ -474,7 +470,7 @@
                                     onclick={prevStep}
                                     class="px-6 py-4 bg-white border-[6px] border-[#A7D8F0] text-slate-900 font-['Lato'] text-lg font-bold rounded-3xl transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0]"
                                 >
-                                    ← Wstecz
+                                    ← Back
                                 </button>
                                 <button
                                     type="submit"
