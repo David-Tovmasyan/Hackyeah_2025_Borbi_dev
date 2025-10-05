@@ -1,7 +1,21 @@
 <script lang="ts">
     import Sidebar from '$lib/ui/Sidebar.svelte';
     import Header from '$lib/ui/Header.svelte';
-    
+    import {onMount} from "svelte";
+
+    onMount(async () => {
+        const d = new Date();
+        let hour = d.getHours();
+        if(hour == 9){
+            let permission = await Notification.requestPermission();
+            if(permission == 'granted'){
+                const notification = new Notification('Przypomnienie o rutynie', {});
+                setTimeout(() => notification.close(), 10*1000);
+            }
+        }
+    })
+
+
     let { children } = $props();
 </script>
 
