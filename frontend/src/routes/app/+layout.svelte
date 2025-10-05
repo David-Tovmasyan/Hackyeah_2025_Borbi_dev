@@ -11,7 +11,7 @@
     ✓ Duże odstępy - komfort wizualny
 -->
 <div class="min-h-screen dark:bg-[#1a1918] light:bg-gradient-to-b light:from-[#E8F4F8] light:to-[#D1E7ED]">
-    <Header />
+    <!-- <Header /> -->
     
     <div class="flex">
         <Sidebar />
