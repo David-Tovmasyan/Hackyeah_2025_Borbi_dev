@@ -7,8 +7,11 @@ _A gentle, goal-setting and routine scheduling web app that helps neurodivergent
 ## 👥 Team
 
 **Team MindWave** – Hackathon 2025  
-- David Tovmasyan – Full-stack Developer  
-- [Add your teammates here]  
+- David Tovmasyan – Frontend programer
+- Roman Gumeniuk – Frontend programer
+- Julian Rybarczyk – Backend programer
+- Dominik Wojtysiak - PM
+- Szymon Maciejewski - Meritorical support  
 
 ---
 
