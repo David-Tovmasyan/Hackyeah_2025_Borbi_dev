@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { currentUser } from '$lib/stores/user';
+
     type UserQuest = {
         id: string; // UUID
         questId: string;
@@ -57,111 +59,99 @@
         { id: 'activity5', title: 'Rozciąganie', description: '15min stretching', emoji: '🤸‍♀️', difficulty: 'easy', category: 'activity' }
     ];
 
-    // Mock UserQuests for 10 days - each day has 3 goals (sleep, diet, activity)
-    const mockUserQuests: UserQuest[] = [
-        // Day 1 - All completed
-        { id: 'day1-sleep', questId: 'sleep1', userId: 'user1', completed: true, date: new Date(2024, 9, 1) },
-        { id: 'day1-diet', questId: 'diet1', userId: 'user1', completed: true, date: new Date(2024, 9, 1) },
-        { id: 'day1-activity', questId: 'activity1', userId: 'user1', completed: true, date: new Date(2024, 9, 1) },
+    // Helper function to create quest for a day and category
+    function createDayQuest(day: number, category: 'sleep' | 'diet' | 'activity', userStreak: number): UserQuest {
+        const questsByCategory = {
+            sleep: sleepQuests,
+            diet: dietQuests,
+            activity: activityQuests
+        };
         
-        // Day 2 - All completed
-        { id: 'day2-sleep', questId: 'sleep2', userId: 'user1', completed: true, date: new Date(2024, 9, 2) },
-        { id: 'day2-diet', questId: 'diet2', userId: 'user1', completed: true, date: new Date(2024, 9, 2) },
-        { id: 'day2-activity', questId: 'activity2', userId: 'user1', completed: true, date: new Date(2024, 9, 2) },
+        const categoryQuests = questsByCategory[category];
+        const questIndex = (day - 1) % categoryQuests.length;
+        const quest = categoryQuests[questIndex];
         
-        // Day 3 - Partially completed (current day)
-        { id: 'day3-sleep', questId: 'sleep3', userId: 'user1', completed: true, date: new Date(2024, 9, 3) },
-        { id: 'day3-diet', questId: 'diet3', userId: 'user1', completed: true, date: new Date(2024, 9, 3) },
-        { id: 'day3-activity', questId: 'activity3', userId: 'user1', completed: false, date: new Date(2024, 9, 3) },
-        
-        // Day 4 - Not started
-        { id: 'day4-sleep', questId: 'sleep4', userId: 'user1', completed: false, date: new Date(2024, 9, 4) },
-        { id: 'day4-diet', questId: 'diet4', userId: 'user1', completed: false, date: new Date(2024, 9, 4) },
-        { id: 'day4-activity', questId: 'activity4', userId: 'user1', completed: false, date: new Date(2024, 9, 4) },
-        
-        // Days 5-10 - Future days, not started
-        { id: 'day5-sleep', questId: 'sleep5', userId: 'user1', completed: false, date: new Date(2024, 9, 5) },
-        { id: 'day5-diet', questId: 'diet5', userId: 'user1', completed: false, date: new Date(2024, 9, 5) },
-        { id: 'day5-activity', questId: 'activity5', userId: 'user1', completed: false, date: new Date(2024, 9, 5) }
-    ];
+        return {
+            id: `day${day}-${category}`,
+            questId: quest.id,
+            userId: $currentUser?.id || 'unknown',
+            completed: day <= userStreak, // Completed if within user's streak
+            date: new Date()
+        };
+    }
 
     const allQuests = [...sleepQuests, ...dietQuests, ...activityQuests];
 
-    // Generate roadmap data from UserQuests - each step represents one complete day
-    function generateRoadmapData(): RoadmapStep[] {
-        const positions = [
-            { x: 50, y: 10 }, // Center
-            { x: 25, y: 20 }, // Left
-            { x: 50, y: 30 }, // Center
-            { x: 75, y: 40 }, // Right
-            { x: 50, y: 50 }, // Center
-            { x: 25, y: 60 }, // Left
-            { x: 50, y: 70 }, // Center
-            { x: 75, y: 80 }, // Right
-            { x: 50, y: 90 }, // Center
-            { x: 50, y: 96 }  // End center
-        ];
+    // Generate roadmap data based on user streak
+    function generateRoadmapData(userStreak: number): RoadmapStep[] {
+        // Generate enough steps - show completed streak + next 5 steps
+        const totalSteps = Math.max(userStreak + 5, 10);
+        
+        // Generate positions in zigzag pattern
+        const positions: { x: number; y: number }[] = [];
+        for (let i = 0; i < totalSteps; i++) {
+            const yStep = (90 / (totalSteps - 1));
+            const yPos = 5 + (i * yStep);
+            
+            let xPos: number;
+            if (i % 4 === 0) xPos = 50; // Center
+            else if (i % 4 === 1) xPos = 25; // Left
+            else if (i % 4 === 2) xPos = 50; // Center
+            else xPos = 75; // Right
+            
+            positions.push({ x: xPos, y: yPos });
+        }
 
         const steps: RoadmapStep[] = [];
         
-        // Group UserQuests by day
-        for (let day = 1; day <= 5; day++) {
-            const dayQuests = mockUserQuests.filter(uq => {
-                const questDate = new Date(uq.date);
-                return questDate.getDate() === day;
-            });
+        // Generate steps based on user's streak
+        for (let day = 1; day <= totalSteps; day++) {
+            // Create quests for this day
+            const sleepQuest = createDayQuest(day, 'sleep', userStreak);
+            const dietQuest = createDayQuest(day, 'diet', userStreak);
+            const activityQuest = createDayQuest(day, 'activity', userStreak);
 
-            if (dayQuests.length === 3) { // Should have sleep, diet, activity
-                const sleepQuest = dayQuests.find(q => {
-                    const quest = allQuests.find(quest => quest.id === q.questId);
-                    return quest?.category === 'sleep';
-                })!;
-                
-                const dietQuest = dayQuests.find(q => {
-                    const quest = allQuests.find(quest => quest.id === q.questId);
-                    return quest?.category === 'diet';
-                })!;
-                
-                const activityQuest = dayQuests.find(q => {
-                    const quest = allQuests.find(quest => quest.id === q.questId);
-                    return quest?.category === 'activity';
-                })!;
+            const completedGoals = [sleepQuest, dietQuest, activityQuest].filter(q => q.completed).length;
+            const completionPercentage = (completedGoals / 3) * 100;
 
-                const completedGoals = [sleepQuest, dietQuest, activityQuest].filter(q => q.completed).length;
-                const completionPercentage = (completedGoals / 3) * 100;
-
-                let status: 'completed' | 'current' | 'locked';
-                if (completedGoals === 3) {
-                    status = 'completed';
-                } else if (day === 3) { // Current day
-                    status = 'current';
-                } else if (day < 3) {
-                    status = completedGoals > 0 ? 'current' : 'locked';
-                } else {
-                    status = 'locked';
-                }
-
-                steps.push({
-                    id: day,
-                    dayGoals: {
-                        sleep: sleepQuest,
-                        diet: dietQuest,
-                        activity: activityQuest
-                    },
-                    status,
-                    position: positions[day - 1],
-                    dayNumber: day,
-                    isToday: day === 3,
-                    completionPercentage
-                });
+            let status: 'completed' | 'current' | 'locked';
+            let isToday = false;
+            
+            if (day <= userStreak) {
+                // Within streak - completed
+                status = 'completed';
+            } else if (day === userStreak + 1) {
+                // Next day after streak - current
+                status = 'current';
+                isToday = true;
+            } else {
+                // Future days - locked
+                status = 'locked';
             }
+
+            steps.push({
+                id: day,
+                dayGoals: {
+                    sleep: sleepQuest,
+                    diet: dietQuest,
+                    activity: activityQuest
+                },
+                status,
+                position: positions[day - 1],
+                dayNumber: day,
+                isToday,
+                completionPercentage
+            });
         }
 
         return steps;
     }
 
-    export let roadmapData: RoadmapStep[] = generateRoadmapData();
-    export let currentStreak: number = 2;
+    // Reactive roadmap data based on user streak
+    $: userStreak = $currentUser?.streak || 0;
+    $: roadmapData = generateRoadmapData(userStreak);
+    $: currentStreak = userStreak;
+    
     export let dailyGoalCompleted: boolean = false;
 
     const pathStart = { x: 50, y: 3 };
@@ -230,40 +220,33 @@
         // Check if all daily goals are completed
         const allCompleted = Object.values(step.dayGoals).every(quest => quest.completed);
         
-        if (allCompleted) {
-            // Mark day as completed
-            step.status = 'completed';
-            step.completionPercentage = 100;
+        if (allCompleted && $currentUser) {
+            // Update user streak in store
+            const newStreak = userStreak + 1;
+            currentUser.update(user => user ? { ...user, streak: newStreak } : user);
+            
             dailyGoalCompleted = true;
-            currentStreak += 1;
-            
-            // Move to next day
-            const currentIndex = roadmapData.findIndex(s => s.id === step.id);
-            const nextStep = roadmapData[currentIndex + 1];
-            if (nextStep) {
-                step.isToday = false;
-                nextStep.status = 'current';
-                nextStep.isToday = true;
-            }
-            
-            roadmapData = roadmapData;
-            console.log(`Day ${step.dayNumber} completed! All goals achieved. Streak: ${currentStreak}`);
+            console.log(`Day ${step.dayNumber} completed! All goals achieved. New streak: ${newStreak}`);
         } else {
             console.log(`Day ${step.dayNumber} not yet complete. Complete all goals: Sleep ✓ Diet ✓ Activity ✓`);
         }
     }
 
-    // Function to toggle individual goal completion (for demo purposes)
+    // Function to toggle individual goal completion (for current day only)
     function toggleGoal(step: RoadmapStep, category: 'sleep' | 'diet' | 'activity') {
         if (!step.isToday) return;
         
-        step.dayGoals[category].completed = !step.dayGoals[category].completed;
-        
-        // Recalculate completion percentage
-        const completedGoals = Object.values(step.dayGoals).filter(quest => quest.completed).length;
-        step.completionPercentage = (completedGoals / 3) * 100;
-        
-        roadmapData = roadmapData;
+        // Only allow toggling if it's the current day (streak + 1)
+        if (step.dayNumber === userStreak + 1) {
+            step.dayGoals[category].completed = !step.dayGoals[category].completed;
+            
+            // Recalculate completion percentage
+            const completedGoals = Object.values(step.dayGoals).filter(quest => quest.completed).length;
+            step.completionPercentage = (completedGoals / 3) * 100;
+            
+            // Force reactivity
+            roadmapData = [...roadmapData];
+        }
     }
 </script>
 

@@ -1,5 +1,7 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
+    import { createUser, type OnboardingData } from '$lib/api';
+    import { setUser } from '$lib/stores/user';
     // Nowe Olaf GIF-y: olaf2 (machający) na ekranie 1, olaf1 (spokojny) na ekranie 2
     import olaf2 from '$lib/assets/gif/olaf2.gif';
     import olaf1 from '$lib/assets/gif/olaf1.gif';
@@ -80,10 +82,45 @@
         nextStep();
     }
     
-    function handleSleepSubmit(e: Event) {
+    async function handleSleepSubmit(e: Event) {
         e.preventDefault();
-        console.log('Onboarding Complete:', formData);
-        goto('/app');
+        
+        try {
+            console.log('Sending onboarding data:', formData);
+            
+            // Wysyłamy dane do API (lub mock)
+            const response = await createUser(formData as OnboardingData);
+            console.log('User created successfully:', response);
+            
+            // Ustawiamy nowego użytkownika w store
+            if (response.user) {
+                const newUser = {
+                    id: response.user.id,
+                    username: response.user.username || formData.name,
+                    hp: response.user.hp || 100,
+                    xp: response.user.xp || 0,
+                    spentPrestige: response.user.spentPrestige || 0,
+                    level: Math.floor((response.user.xp || 0) / 200) + 1,
+                    streak: 1, // Nowy użytkownik zaczyna z 1 dniem
+                    dailyProgress: {
+                        steps: 0,
+                        stepsGoal: formData.stepsGoal,
+                        water: 0,
+                        waterGoal: formData.waterGoal || 8,
+                        meals: 0,
+                        mealsGoal: 3
+                    }
+                };
+                
+                setUser(newUser);
+            }
+            
+            goto('/app');
+        } catch (error) {
+            console.error('Failed to create user:', error);
+            // W przypadku błędu, możemy pokazać komunikat lub spróbować ponownie
+            alert('Wystąpił błąd podczas zapisywania danych. Spróbuj ponownie.');
+        }
     }
 </script>
 
@@ -124,6 +161,16 @@
             <p class="font-['Lato'] text-xl font-bold text-slate-700 mt-8 animate-pulse">
                 👆 Kliknij mnie! 
             </p>
+            
+            <!-- Przycisk logowania -->
+            <div class="mt-8">
+                <a 
+                    href="/login"
+                    class="inline-block px-6 py-3 bg-white/80 border-[4px] border-[#A7D8F0] text-slate-900 font-['Lato'] text-lg font-bold rounded-3xl transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-[6px] focus:ring-[#7EC8E3] shadow-lg"
+                >
+                    🔑 Masz już konto? Zaloguj się
+                </a>
+            </div>
         </div>
     </div>
 

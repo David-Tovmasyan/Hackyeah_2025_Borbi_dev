@@ -1,5 +1,7 @@
 <script lang="ts">
     import { page } from '$app/stores';
+    import { logoutUser, currentUser } from '$lib/stores/user';
+    import { goto } from '$app/navigation';
     
     type SidebarItem = {
         label: string;
@@ -54,8 +56,14 @@
 
     $: currentPath = $page.url.pathname;
 
-    
-    
+    function handleNavigation(event: Event, path: string) {
+        // Jeśli to logout, obsłuż specjalnie
+        if (path === "/app/logout") {
+            event.preventDefault();
+            logoutUser();
+            goto('/login');
+        }
+    }
 </script>
 
 <!-- Desktop Sidebar - Landing Page Colors -->
@@ -70,6 +78,7 @@
             {#each sidebarItems as item (item.path)}
                 <a 
                     href={item.path} 
+                    onclick={(e) => handleNavigation(e, item.path)}
                     class="group relative flex items-center gap-4 px-6 py-5 rounded-3xl no-underline transition-all duration-200 overflow-hidden 
                            {currentPath === item.path 
                                ? 'bg-white/90 text-slate-900 border-[6px] border-[#7EC8E3] shadow-xl shadow-[#7EC8E3]/30' 
@@ -100,7 +109,8 @@
     <div class="flex justify-around items-center p-3 max-w-[600px] mx-auto">
         {#each sidebarItems as item (item.path)}
             <a 
-                href={item.path} 
+                href={item.path}
+                onclick={(e) => handleNavigation(e, item.path)}
                 class="flex flex-col items-center justify-center gap-2 p-3 min-w-[70px] rounded-3xl no-underline transition-all duration-200 relative active:scale-[0.92] 
                        {currentPath === item.path 
                            ? 'text-slate-900 bg-white/90 border-[4px] border-[#7EC8E3] shadow-lg shadow-[#7EC8E3]/30' 
