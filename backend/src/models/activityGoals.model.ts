@@ -5,11 +5,11 @@ export const ActivityGoalIdSchema = z.uuid()
 export type ActivityGoalId = z.infer<typeof ActivityGoalIdSchema>;
 
 export const ActivityGoalSchema = z.object({
-  id: UserIdSchema,
+  id: UserIdSchema.optional(),
   userId: UserIdSchema,
-  stepsGoal: z.int(),
+  steps: z.int(),
   // activityGoal: z.int("Activity time goal in minutes"),
-  dateSet: z.date(),
+  dateSet: z.date().default(new Date()),
  });
 
 export type ActivityGoal = z.infer<typeof ActivityGoalSchema>;

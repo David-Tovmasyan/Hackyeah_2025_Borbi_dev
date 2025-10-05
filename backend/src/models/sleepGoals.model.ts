@@ -5,11 +5,11 @@ export const SleepGoalIdSchema = z.uuid()
 export type SleepGoalId = z.infer<typeof SleepGoalIdSchema>;
 
 export const SleepGoalSchema = z.object({
-  id: SleepGoalIdSchema,
+  id: SleepGoalIdSchema.optional(),
   userId: UserIdSchema, 
   sleepEarliest: z.iso.time(),
   sleepLatest: z.iso.time(),
-  dateSet: z.date(),
+  dateSet: z.date().default(new Date()),
 });
 
 export type SleepGoal = z.infer<typeof SleepGoalSchema>;
