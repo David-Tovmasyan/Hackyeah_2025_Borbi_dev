@@ -1,5 +1,7 @@
 <script lang="ts">
     import { goto } from '$app/navigation';
+    import { createUser, type OnboardingData } from '$lib/api';
+    import { setUser } from '$lib/stores/user';
     // Nowe Olaf GIF-y: olaf2 (machający) na ekranie 1, olaf1 (spokojny) na ekranie 2
     import olaf2 from '$lib/assets/gif/olaf2.gif';
     import olaf1 from '$lib/assets/gif/olaf1.gif';
@@ -9,14 +11,50 @@
     
     // Form data - zebrane dane użytkownika
     let formData = $state({
+        // Krok 1: Imię
         name: '',
+        
+        // Krok 2: Aktywność fizyczna - obecny poziom
+        currentSteps: '',
+        
+        // Krok 3: Cel kroków
         stepsGoal: 10000,
+        
+        // Krok 4: Regularność jedzenia
+        eatingRegularity: '', // irregular, sometimes, mostly, regular, planned
+        
+        // Krok 5: Posiłki
+        meals: [],
+        
+        // Krok 6: Sen - regularność
+        sleepRegularity: '', // irregular, mostly-regular, regular, very-regular, shift-work
+        
+        // Krok 7: Nawodnienie
+        waterGoal: 8,
+        
+        // Krok 8: Cele kaloryczne
         caloriesGoal: 2000,
-        amountOfHours: 8,
+        
+        // Krok 9: Problemy zdrowotne
+        medicalConcerns: [],
+        
+        // Krok 10: Motywacja
+        motivation: '',
+        
+        // Krok 11: Preferencje powiadomień
+        notifications: {
+            meals: false,
+            water: false,
+            activity: false,
+            sleep: false
+        },
+        
+        // Krok 12: Podsumowanie
+        // - ostateczne potwierdzenie
     });
     
     function nextStep() {
-        if (currentStep < 6) {
+        if (currentStep < 12) {
             currentStep++;
         }
     }
@@ -44,10 +82,45 @@
         nextStep();
     }
     
-    function handleSleepSubmit(e: Event) {
+    async function handleSleepSubmit(e: Event) {
         e.preventDefault();
-        console.log('Onboarding Complete:', formData);
-        goto('/app');
+        
+        try {
+            console.log('Sending onboarding data:', formData);
+            
+            // Wysyłamy dane do API (lub mock)
+            const response = await createUser(formData as OnboardingData);
+            console.log('User created successfully:', response);
+            
+            // Ustawiamy nowego użytkownika w store
+            if (response.user) {
+                const newUser = {
+                    id: response.user.id,
+                    username: response.user.username || formData.name,
+                    hp: response.user.hp || 100,
+                    xp: response.user.xp || 0,
+                    spentPrestige: response.user.spentPrestige || 0,
+                    level: Math.floor((response.user.xp || 0) / 200) + 1,
+                    streak: 1, // Nowy użytkownik zaczyna z 1 dniem
+                    dailyProgress: {
+                        steps: 0,
+                        stepsGoal: formData.stepsGoal,
+                        water: 0,
+                        waterGoal: formData.waterGoal || 8,
+                        meals: 0,
+                        mealsGoal: 3
+                    }
+                };
+                
+                setUser(newUser);
+            }
+            
+            goto('/app');
+        } catch (error) {
+            console.error('Failed to create user:', error);
+            // W przypadku błędu, możemy pokazać komunikat lub spróbować ponownie
+            alert('Wystąpił błąd podczas zapisywania danych. Spróbuj ponownie.');
+        }
     }
 </script>
 
@@ -88,6 +161,16 @@
             <p class="font-['Lato'] text-xl font-bold text-slate-700 mt-8 animate-pulse">
                 👆 Kliknij mnie! 
             </p>
+            
+            <!-- Przycisk logowania -->
+            <div class="mt-8">
+                <a 
+                    href="/login"
+                    class="inline-block px-6 py-3 bg-white/80 border-[4px] border-[#A7D8F0] text-slate-900 font-['Lato'] text-lg font-bold rounded-3xl transition-all duration-200 hover:scale-105 focus:outline-none focus:ring-[6px] focus:ring-[#7EC8E3] shadow-lg"
+                >
+                    🔑 Masz już konto? Zaloguj się
+                </a>
+            </div>
         </div>
     </div>
 
@@ -292,26 +375,29 @@
                             Zdrowe odżywianie 🥗
                         </h2>
                         <p class="font-['Lato'] text-lg text-slate-700 mb-8 text-center">
-                            Jaki jest Twój dzienny cel kaloryczny?
+                            Jak regularnie jesz?
                         </p>
                         
                         <form onsubmit={handleDietSubmit} class="space-y-6">
                             <div>
-                                <label for="caloriesGoal" class="block font-['Lato'] text-2xl font-bold text-slate-900 mb-3">
-                                    🍎 Cel kalorii
+                                <label for="eatingRegularity" class="block font-['Lato'] text-2xl font-bold text-slate-900 mb-3">
+                                    🍽️ Regularność posiłków
                                 </label>
-                                <input
-                                    id="caloriesGoal"
-                                    type="number"
-                                    bind:value={formData.caloriesGoal}
-                                    min="0"
-                                    step="50"
+                                <select
+                                    id="eatingRegularity"
+                                    bind:value={formData.eatingRegularity}
                                     class="w-full px-6 py-4 border-[6px] border-[#B5E3FF] rounded-3xl font-['Lato'] text-xl text-slate-900 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0] focus:border-[#A7D8F0] transition-all bg-[#F0F9FF]"
                                     required
-                                    autofocus
-                                />
+                                >
+                                    <option value="">Wybierz opcję...</option>
+                                    <option value="irregular">Nieregularnie - jem kiedy przypomę sobie</option>
+                                    <option value="sometimes">Czasami regularnie - zależy od dnia</option>
+                                    <option value="mostly">Przeważnie regularnie - 2-3 posiłki dziennie</option>
+                                    <option value="regular">Bardzo regularnie - ustalone godziny posiłków</option>
+                                    <option value="planned">Mam szczegółowy plan żywieniowy</option>
+                                </select>
                                 <p class="font-['Lato'] text-base text-slate-600 mt-3 ml-2">
-                                    💡 Średnia dla dorosłych: 2000-2500 kcal dziennie
+                                    💡 Pomożemy Ci ustalić regularny harmonogram posiłków!
                                 </p>
                             </div>
 
@@ -356,27 +442,29 @@
                             Regeneracja 😴
                         </h2>
                         <p class="font-['Lato'] text-lg text-slate-700 mb-8 text-center">
-                            Ile godzin snu potrzebujesz?
+                            Jak wygląda Twój rytm snu?
                         </p>
                         
                         <form onsubmit={handleSleepSubmit} class="space-y-6">
                             <div>
-                                <label for="amountOfHours" class="block font-['Lato'] text-2xl font-bold text-slate-900 mb-3">
-                                    🌙 Cel godzin snu
+                                <label for="sleepRegularity" class="block font-['Lato'] text-2xl font-bold text-slate-900 mb-3">
+                                    🌙 Regularność snu
                                 </label>
-                                <input
-                                    id="amountOfHours"
-                                    type="number"
-                                    bind:value={formData.amountOfHours}
-                                    min="0"
-                                    max="12"
-                                    step="0.5"
+                                <select
+                                    id="sleepRegularity"
+                                    bind:value={formData.sleepRegularity}
                                     class="w-full px-6 py-4 border-[6px] border-[#B5E3FF] rounded-3xl font-['Lato'] text-xl text-slate-900 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0] focus:border-[#A7D8F0] transition-all bg-[#F0F9FF]"
                                     required
-                                    autofocus
-                                />
+                                >
+                                    <option value="">Wybierz opcję...</option>
+                                    <option value="irregular">Nieregularnie - różne godziny każdego dnia</option>
+                                    <option value="mostly-regular">W miarę regularnie - podobne godziny w tygodniu</option>
+                                    <option value="regular">Regularnie - stałe godziny kładzenia się</option>
+                                    <option value="very-regular">Bardzo regularnie - zawsze o tej samej porze</option>
+                                    <option value="shift-work">Praca zmianowa - zmienne godziny ze względu na pracę</option>
+                                </select>
                                 <p class="font-['Lato'] text-base text-slate-600 mt-3 ml-2">
-                                    💡 Rekomendowane: 7-9 godzin dla dorosłych
+                                    💡 Pomożemy Ci ustalić idealny harmonogram snu!
                                 </p>
                             </div>
 
@@ -420,8 +508,6 @@
     .animate-fade-in {
         animation: fade-in 0.6s ease-out;
     }
-    
-   
     
 </style>
 
