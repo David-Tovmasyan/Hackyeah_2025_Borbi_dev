@@ -59,34 +59,35 @@
 </script>
 
 <!-- Desktop Sidebar -->
-<aside id="sidebar" class="hidden md:block w-[280px] h-screen sticky top-0 overflow-y-auto overflow-x-hidden
-                          dark:bg-gradient-to-b dark:from-stone-900 dark:to-[#0f0e0d] dark:border-stone-700/30
-                          light:bg-gradient-to-b light:from-sky-50 light:to-sky-100 light:border-sky-200
-                          border-r [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent 
-                          [&::-webkit-scrollbar-thumb]:dark:bg-stone-400/20 [&::-webkit-scrollbar-thumb]:light:bg-sky-400/20 
+<aside id="sidebar" class="hidden md:block w-[300px] h-screen sticky top-0 overflow-y-auto overflow-x-hidden
+                          dark:bg-gradient-to-b dark:from-stone-900 dark:to-[#0f0e0d] dark:border-stone-600
+                          light:bg-gradient-to-b light:from-[#D4EAF7] light:to-[#B5E3FF] light:border-[#A7D8F0]
+                          border-r-[6px] [&::-webkit-scrollbar]:w-1 [&::-webkit-scrollbar-track]:bg-transparent 
+                          [&::-webkit-scrollbar-thumb]:dark:bg-stone-400/20 [&::-webkit-scrollbar-thumb]:light:bg-[#7EC8E3]/30 
                           [&::-webkit-scrollbar-thumb]:rounded-lg">
     <div class="flex flex-col py-8 h-full">
         <!-- Navigation Items -->
-        <nav class="flex flex-col gap-2 px-4">
+        <nav class="flex flex-col gap-3 px-4">
             {#each sidebarItems as item (item.path)}
                 <a 
                     href={item.path} 
-                    class="group relative flex items-center gap-4 px-4 py-3.5 rounded-xl no-underline transition-all duration-200 overflow-hidden 
+                    class="group relative flex items-center gap-4 px-5 py-4 rounded-2xl no-underline transition-all duration-200 overflow-hidden 
                            {currentPath === item.path 
-                               ? 'dark:bg-stone-700/50 dark:text-stone-50 light:bg-sky-200/70 light:text-slate-800' 
-                               : 'dark:text-stone-400 light:text-slate-600'}
-                           dark:hover:bg-stone-700/30 dark:hover:text-stone-50 
-                           light:hover:bg-sky-200/50 light:hover:text-slate-800
-                           hover:translate-x-1 active:translate-x-1 active:scale-[0.98]" 
+                               ? 'dark:bg-stone-700/70 dark:text-stone-50 light:bg-[#A7D8F0]/90 light:text-slate-900 border-[4px] dark:border-stone-500 light:border-[#7EC8E3]' 
+                               : 'dark:text-stone-400 light:text-slate-800 border-[4px] border-transparent'}
+                           dark:hover:bg-stone-700/50 dark:hover:text-stone-50 
+                           light:hover:bg-[#B5E3FF]/80 light:hover:text-slate-900
+                           hover:translate-x-1 active:translate-x-1 active:scale-[0.98]
+                           focus:outline-none focus:ring-[6px] focus:ring-[#7EC8E3]" 
                     style="--item-color: {item.color}"
                 >
-                    <div class="w-6 h-6 flex-shrink-0 transition-all duration-200 group-hover:scale-110" style="color: var(--item-color, #a8a29e);">
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="w-full h-full">
+                    <div class="w-8 h-8 flex-shrink-0 transition-all duration-200 group-hover:scale-110" style="color: var(--item-color, #7EC8E3);">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="w-full h-full">
                             {@html getIcon(item.icon)}
                         </svg>
                     </div>
-                    <span class="font-['Lato'] text-[0.95rem] font-semibold tracking-tight">{item.label}</span>
-                    <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full w-0.5 h-[60%] rounded-l-lg transition-transform duration-200 group-hover:translate-x-0" style="background: var(--item-color, #3b82f6);"></div>
+                    <span class="font-['Lato'] text-lg font-bold tracking-tight">{item.label}</span>
+                    <div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-full w-1 h-[70%] rounded-l-lg transition-transform duration-200 group-hover:translate-x-0" style="background: var(--item-color, #7EC8E3);"></div>
                 </a>
             {/each}
         </nav>
@@ -94,33 +95,34 @@
 </aside>
 
 <!-- Mobile Bottom Navigation -->
-<nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t
-             dark:bg-[rgba(28,25,23,0.95)] dark:border-stone-700/30
-             light:bg-[rgba(224,242,254,0.95)] light:border-sky-300
+<nav class="md:hidden fixed bottom-0 left-0 right-0 z-50 border-t-[6px]
+             dark:bg-[rgba(28,25,23,0.95)] dark:border-stone-600
+             light:bg-[rgba(212,234,247,0.95)] light:border-[#A7D8F0]
              backdrop-blur-xl shadow-[0_-4px_20px_rgba(0,0,0,0.3)]" 
      style="padding-bottom: env(safe-area-inset-bottom, 0);">
-    <div class="flex justify-around items-center p-2 max-w-[600px] mx-auto">
+    <div class="flex justify-around items-center p-3 max-w-[600px] mx-auto">
         {#each sidebarItems as item (item.path)}
             <a 
                 href={item.path} 
-                class="flex flex-col items-center justify-center gap-1 p-2 min-w-[60px] rounded-xl no-underline transition-all duration-200 relative active:scale-[0.92] 
+                class="flex flex-col items-center justify-center gap-1.5 p-2 min-w-[70px] rounded-2xl no-underline transition-all duration-200 relative active:scale-[0.92] 
                        {currentPath === item.path 
-                           ? 'dark:text-stone-200 light:text-slate-800' 
-                           : 'dark:text-stone-500 light:text-slate-500'}
-                       [@media(max-width:480px)]:min-w-[50px] [@media(max-width:480px)]:p-1.5 [@media(max-width:360px)]:min-w-0" 
+                           ? 'dark:text-stone-200 light:text-slate-900 dark:bg-stone-700/50 light:bg-[#A7D8F0]/80' 
+                           : 'dark:text-stone-500 light:text-slate-700'}
+                       focus:outline-none focus:ring-[6px] focus:ring-[#7EC8E3]
+                       [@media(max-width:480px)]:min-w-[60px] [@media(max-width:480px)]:p-1.5 [@media(max-width:360px)]:min-w-0" 
                 style="--item-color: {item.color}"
             >
-                <div class="w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-200 
-                            dark:active:bg-stone-700/50 light:active:bg-sky-200/50
-                            [@media(max-width:480px)]:w-9 [@media(max-width:480px)]:h-9 [@media(max-width:360px)]:w-11 [@media(max-width:360px)]:h-11" 
-                     style="color: var(--item-color, #a8a29e);">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="w-6 h-6 [@media(max-width:480px)]:w-5 [@media(max-width:480px)]:h-5">
+                <div class="w-12 h-12 flex items-center justify-center rounded-2xl transition-all duration-200 
+                            dark:active:bg-stone-700/70 light:active:bg-[#A7D8F0]/70
+                            [@media(max-width:480px)]:w-10 [@media(max-width:480px)]:h-10 [@media(max-width:360px)]:w-12 [@media(max-width:360px)]:h-12" 
+                     style="color: var(--item-color, #7EC8E3);">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" class="w-7 h-7 [@media(max-width:480px)]:w-6 [@media(max-width:480px)]:h-6">
                         {@html getIcon(item.icon)}
                     </svg>
                 </div>
-                <span class="font-['Lato'] text-[0.65rem] font-semibold text-center transition-colors duration-200 
-                             dark:text-stone-400 light:text-slate-600
-                             [@media(max-width:480px)]:text-[0.6rem] [@media(max-width:360px)]:hidden">{item.label}</span>
+                <span class="font-['Lato'] text-xs font-bold text-center transition-colors duration-200 
+                             dark:text-stone-400 light:text-slate-800
+                             [@media(max-width:480px)]:text-[0.65rem] [@media(max-width:360px)]:hidden">{item.label}</span>
             </a>
         {/each}
     </div>

@@ -1,4 +1,6 @@
 <script lang="ts">
+    import olaf2 from '$lib/assets/gif/olaf2.gif';
+    
     type Achievement = {
         id: string;
         title: string;
@@ -107,28 +109,31 @@
 </script>
 
 <div class="w-full max-w-6xl mx-auto p-6 space-y-6">
-    <!-- Header with Progress -->
+    <!-- Header with Olaf + Progress -->
     <div class="space-y-4">
         <div class="flex items-center justify-between flex-wrap gap-4">
-            <h1 class="font-['Lato'] text-3xl font-bold text-stone-50">
-                Achievements
-            </h1>
+            <div class="flex items-center gap-4">
+                <img src={olaf2} alt="Olaf" class="w-16 h-16 object-contain rounded-full" />
+                <h1 class="font-['Lato'] text-3xl font-bold dark:text-stone-50 light:text-slate-900">
+                    Osiągnięcia 🏆
+                </h1>
+            </div>
             <div class="flex items-center gap-3">
-                <span class="font-['Lato'] text-sm text-stone-300">
-                    {unlockedCount} / {totalCount} unlocked
+                <span class="font-['Lato'] text-sm dark:text-stone-300 light:text-slate-700">
+                    {unlockedCount} / {totalCount} odblokowane
                 </span>
-                <div class="px-4 py-2 bg-gradient-to-r from-yellow-500/20 to-orange-500/20 rounded-full border border-yellow-500/30">
-                    <span class="font-['Lato'] text-sm font-bold text-yellow-400">
-                        {completionPercentage}% Complete
+                <div class="px-4 py-2 dark:bg-gradient-to-r dark:from-yellow-500/20 dark:to-orange-500/20 light:bg-[#FFE8D9] rounded-full border-[4px] dark:border-yellow-500/30 light:border-[#FFB88C]">
+                    <span class="font-['Lato'] text-sm font-bold dark:text-yellow-400 light:text-orange-600">
+                        {completionPercentage}%
                     </span>
                 </div>
             </div>
         </div>
 
         <!-- Progress Bar -->
-        <div class="w-full h-3 bg-stone-800 rounded-full overflow-hidden border border-stone-700">
+        <div class="w-full h-3 dark:bg-stone-800 light:bg-[#E8F4F8] rounded-full overflow-hidden border-[4px] dark:border-stone-700 light:border-[#A7D8F0]">
             <div 
-                class="h-full bg-gradient-to-r from-yellow-500 via-orange-500 to-pink-500 transition-all duration-1000 ease-out rounded-full"
+                class="h-full dark:bg-gradient-to-r dark:from-yellow-500 dark:via-orange-500 dark:to-pink-500 light:bg-gradient-to-r light:from-[#7EC8E3] light:via-[#5DADE2] light:to-[#4A9DD2] transition-all duration-1000 ease-out rounded-full"
                 style="width: {completionPercentage}%"
             ></div>
         </div>

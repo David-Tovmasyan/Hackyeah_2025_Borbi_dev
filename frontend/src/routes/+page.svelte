@@ -1,21 +1,21 @@
 <script lang="ts">
-    import IMG_0156 from '$lib/assets/gif/IMG_0156.gif';
-    import IMG_0157 from '$lib/assets/gif/IMG_0157.gif';
+    import { goto } from '$app/navigation';
+    // Nowe Olaf GIF-y: olaf2 (machający) na ekranie 1, olaf1 (spokojny) na ekranie 2
+    import olaf2 from '$lib/assets/gif/olaf2.gif';
+    import olaf1 from '$lib/assets/gif/olaf1.gif';
     
-    let currentGif = $state(IMG_0156);
-    let showBubble = $state(true);
+    // Step management
+    let currentStep = $state(1); // 1 = welcome, 2 = form
     
-    // Form data based on ActivityGoal schema
+    // Form data based on amountOfHours schema
+    // Tylko kroki i minuty aktywności - prosty, przejrzysty formularz dla osób neuroatypowych
     let formData = $state({
-        stepsGoal: 10000,
-        activityGoal: 30,
-        burnGoal: 500,
+        stepsGoal: 8000,
+        amountOfHours: 8,
     });
     
-    function toggleGif() {
-        currentGif = currentGif === IMG_0156 ? IMG_0157 : IMG_0156;
-        showBubble = true;
-        setTimeout(() => showBubble = false, 3000);
+    function goToStep2() {
+        currentStep = 2;
     }
     
     function handleSubmit(e: Event) {
@@ -24,126 +24,186 @@
             ...formData,
             dateSet: new Date(),
         });
-        alert('Cel zapisany! 🦭✨');
+        // Redirect to app
+        goto('/app');
     }
 </script>
 
 <svelte:head>
-    <title>Seal Your Habits - Olaf</title>
+    <title>Seal Your Habits - Witaj!</title>
 </svelte:head>
 
-<div class="min-h-screen bg-gradient-to-b from-[#E8F4F8] via-[#D1E7ED] to-[#B8DCE5] flex items-center justify-center p-8">
-    <div class="max-w-2xl w-full">
-        <!-- Olaf with Speech Bubble -->
-        <div class="relative mb-12">
-            <!-- Speech Bubble -->
-            {#if showBubble}
-                <div class="absolute -top-40 left-1/2 -translate-x-1/2 bg-white px-8 py-6 rounded-3xl shadow-2xl border-4 border-sky-300 min-w-[350px] animate-fade-in z-10">
-                    <p class="font-['Lato'] text-xl font-semibold text-slate-800 text-center leading-relaxed">
-                        {#if currentGif === IMG_0156}
-                            Cześć! Jestem Olaf! 👋<br/>
-                            Kliknij mnie! 🦭
-                        {:else}
-                            Świetnie! Teraz ustaw<br/>
-                            swoje cele! 🎯
-                        {/if}
+{#if currentStep === 1}
+    <!-- 
+        EKRAN 1: Ekran powitalny
+        DESIGN DLA NEUROATYPOWYCH (ADHD, Autyzm, Dysleksja):
+        ✓ Pastele (łagodne dla oczu, redukują zmęczenie wzrokowe)
+        ✓ Duży kontrast tekstu (WCAG AAA - slate-800/900 na białym)
+        ✓ Zaokrąglenia (rounded-full = spokojne, nie agresywne)
+        ✓ Duże odstępy (mb-12, mt-10 = czas na przetworzenie informacji)
+        ✓ Jeden fokus na raz (tylko Olaf + komunikat)
+        ✓ Przewidywalna animacja (bounce-gentle, nie chaotyczna)
+        ✓ Wyraźny focus ring (6px grubości = widoczny dla wszystkich)
+    -->
+    <div class="min-h-screen bg-gradient-to-b from-[#E8F4F8] via-[#D1E7ED] to-[#B8DCE5] flex items-center justify-center p-8">
+        <div class="flex flex-col items-center animate-fade-in">
+            <!-- Speech Bubble - NA GÓRZE (naturalna kolejność czytania) -->
+            <div class="relative mb-12 animate-bounce-gentle">
+                <div class="bg-white px-12 py-6 rounded-full shadow-2xl border-[6px] border-sky-400 max-w-lg">
+                    <p class="font-['Lato'] text-3xl font-bold text-slate-900 text-center leading-relaxed">
+                        Cześć! Jestem Olaf! 👋
+                    </p>
+                    <p class="font-['Lato'] text-xl font-semibold text-slate-800 mt-4 text-center leading-relaxed">
+                        Witam Cię w bezpiecznym miejscu,<br/>
+                        gdzie możesz być sobą!
                     </p>
                     <!-- Bubble tail -->
-                    <div class="absolute -bottom-4 left-1/2 -translate-x-1/2 w-8 h-8 bg-white border-b-4 border-r-4 border-sky-300 transform rotate-45"></div>
+                    <div class="absolute -bottom-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-white border-b-[6px] border-r-[6px] border-sky-400 transform rotate-45"></div>
                 </div>
-            {/if}
+            </div>
             
-            <!-- Olaf GIF - clickable -->
+            <!-- Olaf GIF - clickable z wyraźnym focus -->
             <button 
-                onclick={toggleGif}
-                class="mx-auto block hover:scale-105 transition-transform duration-300 focus:outline-none focus:ring-4 focus:ring-sky-300 rounded-3xl"
+                onclick={goToStep2}
+                class="hover:scale-105 transition-transform duration-200 focus:outline-none focus:ring-[6px] focus:ring-sky-500 rounded-3xl"
+                aria-label="Kliknij Olafa aby przejść dalej"
             >
                 <img 
-                    src={currentGif} 
-                    alt="Olaf the Seal" 
-                    class="w-64 h-64 object-contain mx-auto rounded-3xl"
+                    src={olaf2} 
+                    alt="Olaf the Seal - Click me!" 
+                    class="w-80 h-80 object-contain rounded-3xl"
                 />
             </button>
-        </div>
-
-        <!-- Activity Goal Form -->
-        <div class="bg-white rounded-3xl shadow-2xl border-3 border-sky-300 p-8">
-            <h2 class="font-['Lato'] text-3xl font-bold text-slate-800 mb-6 text-center">
-                Ustaw swoje cele dzienne
-            </h2>
             
-            <form onsubmit={handleSubmit} class="space-y-6">
-                <!-- Steps Goal -->
-                <div>
-                    <label for="stepsGoal" class="block font-['Lato'] text-lg font-semibold text-slate-700 mb-2">
-                        🚶 Cel kroków
-                    </label>
-                    <input
-                        id="stepsGoal"
-                        type="number"
-                        bind:value={formData.stepsGoal}
-                        min="0"
-                        class="w-full px-4 py-3 border-2 border-sky-200 rounded-xl font-['Lato'] text-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                        required
-                    />
-                </div>
-
-                <!-- Activity Goal (minutes) -->
-                <div>
-                    <label for="activityGoal" class="block font-['Lato'] text-lg font-semibold text-slate-700 mb-2">
-                        ⏱️ Cel aktywności (minuty)
-                    </label>
-                    <input
-                        id="activityGoal"
-                        type="number"
-                        bind:value={formData.activityGoal}
-                        min="0"
-                        class="w-full px-4 py-3 border-2 border-sky-200 rounded-xl font-['Lato'] text-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                        required
-                    />
-                </div>
-
-                <!-- Burn Goal (calories) -->
-                <div>
-                    <label for="burnGoal" class="block font-['Lato'] text-lg font-semibold text-slate-700 mb-2">
-                        🔥 Cel spalonych kalorii
-                    </label>
-                    <input
-                        id="burnGoal"
-                        type="number"
-                        bind:value={formData.burnGoal}
-                        min="0"
-                        class="w-full px-4 py-3 border-2 border-sky-200 rounded-xl font-['Lato'] text-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
-                        required
-                    />
-                </div>
-
-                <!-- Submit Button -->
-                <button
-                    type="submit"
-                    class="w-full px-6 py-4 bg-gradient-to-r from-sky-500 to-blue-500 hover:from-sky-600 hover:to-blue-600 text-white font-['Lato'] text-xl font-bold rounded-xl transition-all duration-200 hover:scale-105 shadow-lg shadow-sky-500/30"
-                >
-                    🎯 Zapisz cele
-                </button>
-            </form>
+            <p class="font-['Lato'] text-xl font-bold text-slate-700 mt-8 animate-pulse">
+                👆 Kliknij mnie! 
+            </p>
         </div>
     </div>
-</div>
+{:else}
+    <!-- 
+        EKRAN 2: Formularz z celami aktywności
+        DESIGN DLA NEUROATYPOWYCH (ADHD, Autyzm, Dysleksja):
+        ✓ Tylko 2 pola (kroki + minuty) - nie przytłacza ilością informacji
+        ✓ Duże inputy (py-4, text-xl) - łatwe kliknięcie i wpisanie
+        ✓ Wyraźne labele z emoji - wizualna pomoc w identyfikacji
+        ✓ Wysokie kontrasty (WCAG AAA) - slate-900 na białym
+        ✓ Grube bordery (6px) - wyraźne granice elementów
+        ✓ Wielki focus ring (6px) - jasno widać gdzie jesteś
+        ✓ Duże odstępy (space-y-6) - czas na przetworzenie każdego pola
+        ✓ Podpowiedzi pod inputami - jasne oczekiwania
+        ✓ Zaokrąglenia (rounded-3xl) - spokojne, przyjazne kształty
+        ✓ Jeden wyraźny przycisk akcji
+    -->
+    <div class="min-h-screen bg-gradient-to-b from-[#E8F4F8] via-[#D1E7ED] to-[#B8DCE5] flex items-center justify-center p-6">
+        <div class="max-w-5xl w-full animate-fade-in">
+            <!-- Layout: Olaf po lewej (duży), Formularz po prawej -->
+            <div class="flex flex-col lg:flex-row items-center gap-8 lg:gap-12">
+                <!-- Olaf GIF 1 (spokojny) - DUŻY po lewej -->
+                <div class="lg:w-1/2 flex justify-center lg:justify-end">
+                    <img 
+                        src={olaf1} 
+                        alt="Olaf the Seal czeka na Twoje cele" 
+                        class="w-80 h-80 lg:w-96 lg:h-96 object-contain rounded-3xl "
+                    />
+                </div>
+
+                <!-- Activity Goal Form - po prawej -->
+                <div class="lg:w-1/2 w-full">
+                    <div class="bg-white rounded-3xl shadow-2xl border-[6px] border-[#A7D8F0] p-6">
+                <h2 class="font-['Lato'] text-3xl font-bold text-slate-900 mb-2 text-center">
+                    Świetnie! 🎉
+                </h2>
+                <p class="font-['Lato'] text-lg text-slate-700 mb-5 text-center">
+                    Ustaw swoje dzienne cele
+                </p>
+                
+                <form onsubmit={handleSubmit} class="space-y-5">
+                    <!-- Steps Goal -->
+                    <div>
+                        <label for="stepsGoal" class="block font-['Lato'] text-xl font-bold text-slate-900 mb-2">
+                            🚶 Cel kroków
+                        </label>
+                        <input
+                            id="stepsGoal"
+                            type="number"
+                            bind:value={formData.stepsGoal}
+                            min="0"
+                            step="100"
+                            class="w-full px-4 py-3 border-[6px] border-[#B5E3FF] rounded-3xl font-['Lato'] text-lg text-slate-900 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0] focus:border-[#A7D8F0] transition-all bg-[#F0F9FF]"
+                            required
+                            aria-describedby="steps-hint"
+                        />
+                        <p id="steps-hint" class="font-['Lato'] text-sm text-slate-600 mt-1.5 ml-2">
+                            np. 10000
+                        </p>
+                    </div>
+
+                    <!-- Activity Goal (minutes) -->
+                    <div>
+                        <label for="amountOfHours" class="block font-['Lato'] text-xl font-bold text-slate-900 mb-2">
+                            ⏱️ Cel godzin snu
+                        </label>
+                        <input
+                            id="amountOfHours"
+                            type="number"
+                            bind:value={formData.amountOfHours}
+                            min="0"
+                            step="1"
+                            max="12"
+                            class="w-full px-4 py-3 border-[6px] border-[#B5E3FF] rounded-3xl font-['Lato'] text-lg text-slate-900 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0] focus:border-[#A7D8F0] transition-all bg-[#F0F9FF]"
+                            required
+                            aria-describedby="activity-hint"
+                        />
+                        <p id="activity-hint" class="font-['Lato'] text-sm text-slate-600 mt-1.5 ml-2">
+                            np. 8
+                        </p>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button
+                        type="submit"
+                        class="w-full px-6 py-4 bg-gradient-to-r from-[#7EC8E3] to-[#5DADE2] hover:from-[#6BB8D3] hover:to-[#4A9DD2] text-white font-['Lato'] text-xl font-bold rounded-3xl transition-all duration-200 hover:scale-105 shadow-2xl shadow-[#7EC8E3]/50 mt-6 focus:outline-none focus:ring-[6px] focus:ring-[#A7D8F0]"
+                    >
+                        🎯 Zapisz!
+                    </button>
+                </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{/if}
 
 <style>
     @keyframes fade-in {
         from {
             opacity: 0;
-            transform: translateX(-50%) translateY(-10px);
+            transform: translateY(20px);
         }
         to {
             opacity: 1;
-            transform: translateX(-50%) translateY(0);
+            transform: translateY(0);
+        }
+    }
+    
+    @keyframes bounce-gentle {
+        0%, 100% {
+            transform: translateY(0);
+        }
+        50% {
+            transform: translateY(-15px);
         }
     }
     
     .animate-fade-in {
-        animation: fade-in 0.3s ease-out;
+        animation: fade-in 0.6s ease-out;
     }
+    
+    .animate-bounce-gentle {
+        animation: bounce-gentle 2s ease-in-out infinite;
+    }
+    
 </style>
+
 
