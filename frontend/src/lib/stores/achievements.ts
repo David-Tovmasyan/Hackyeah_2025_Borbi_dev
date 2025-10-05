@@ -1,4 +1,4 @@
-import { writable, derived } from 'svelte/store';
+﻿import { writable, derived } from 'svelte/store';
 import { browser } from '$app/environment';
 import { currentUser } from './user';
 
@@ -12,7 +12,7 @@ export type Achievement = {
     progress: number;
     target: number;
     category: 'streak' | 'activity' | 'consistency' | 'special';
-    // Pastelowe kolory zgodne z neuroatypical design guide
+    // Pastel colors per neuroatypical design guide
     color: string;
 };
 
@@ -26,7 +26,7 @@ const achievementDefinitions: Omit<Achievement, 'unlocked' | 'unlockedDate' | 'p
         icon: "👣",
         target: 1,
         category: 'streak',
-        color: 'from-[#B5E3FF] to-[#A7D8F0]' // Pastelowy niebieski
+        color: 'from-[#B5E3FF] to-[#A7D8F0]' // Pastel blue
     },
     {
         id: "three-day-streak",
@@ -44,7 +44,7 @@ const achievementDefinitions: Omit<Achievement, 'unlocked' | 'unlockedDate' | 'p
         icon: "⚔️",
         target: 7,
         category: 'streak',
-        color: 'from-[#7EC8E3] to-[#5DADE2]' // Gradient blue z guide
+        color: 'from-[#7EC8E3] to-[#5DADE2]' // Blue gradient from guide
     },
     {
         id: "two-week-champion",
@@ -53,7 +53,7 @@ const achievementDefinitions: Omit<Achievement, 'unlocked' | 'unlockedDate' | 'p
         icon: "🏅",
         target: 14,
         category: 'streak',
-        color: 'from-[#B8DCE5] to-[#A7D8F0]' // Spokojny niebieski
+        color: 'from-[#B8DCE5] to-[#A7D8F0]' // Calm blue
     },
     {
         id: "consistency-king",
@@ -62,7 +62,7 @@ const achievementDefinitions: Omit<Achievement, 'unlocked' | 'unlockedDate' | 'p
         icon: "👑",
         target: 30,
         category: 'streak',
-        color: 'from-[#D1E7ED] to-[#B8DCE5]' // Pastelowy gradient
+        color: 'from-[#D1E7ED] to-[#B8DCE5]' // Pastel gradient
     },
     {
         id: "unstoppable",
@@ -71,7 +71,7 @@ const achievementDefinitions: Omit<Achievement, 'unlocked' | 'unlockedDate' | 'p
         icon: "🔥",
         target: 50,
         category: 'streak',
-        color: 'from-[#B5E3FF] to-[#7EC8E3]' // Jasny akcent
+        color: 'from-[#B5E3FF] to-[#7EC8E3]' // Light accent
     },
     {
         id: "legend",
@@ -91,7 +91,7 @@ const achievementDefinitions: Omit<Achievement, 'unlocked' | 'unlockedDate' | 'p
         icon: "🌱",
         target: 1,
         category: 'activity',
-        color: 'from-[#E8F4F8] to-[#D4EAF7]' // Bardzo jasny
+        color: 'from-[#E8F4F8] to-[#D4EAF7]' // Very light
     },
     {
         id: "novice",
@@ -109,7 +109,7 @@ const achievementDefinitions: Omit<Achievement, 'unlocked' | 'unlockedDate' | 'p
         icon: "🎯",
         target: 10,
         category: 'activity',
-        color: 'from-[#B5E3FF] to-[#A7D8F0]' // Jasny niebieski
+        color: 'from-[#B5E3FF] to-[#A7D8F0]' // Light blue
     },
     {
         id: "skilled",
@@ -136,7 +136,7 @@ const achievementDefinitions: Omit<Achievement, 'unlocked' | 'unlockedDate' | 'p
         icon: "👑",
         target: 30,
         category: 'activity',
-        color: 'from-[#5DADE2] to-[#4A9DD2]' // Mocniejszy niebieski
+        color: 'from-[#5DADE2] to-[#4A9DD2]' // Stronger blue
     },
     {
         id: "grandmaster",
@@ -145,7 +145,7 @@ const achievementDefinitions: Omit<Achievement, 'unlocked' | 'unlockedDate' | 'p
         icon: "💎",
         target: 50,
         category: 'activity',
-        color: 'from-[#B8DCE5] to-[#7EC8E3]' // Luksusowy gradient
+        color: 'from-[#B8DCE5] to-[#7EC8E3]' // Luxury gradient
     },
     
     // Total days achievements
@@ -156,7 +156,7 @@ const achievementDefinitions: Omit<Achievement, 'unlocked' | 'unlockedDate' | 'p
         icon: "🔟",
         target: 10,
         category: 'consistency',
-        color: 'from-[#E8F4F8] to-[#D4EAF7]' // Bardzo jasny
+        color: 'from-[#E8F4F8] to-[#D4EAF7]' // Very light
     },
     {
         id: "quarter-century",
@@ -174,7 +174,7 @@ const achievementDefinitions: Omit<Achievement, 'unlocked' | 'unlockedDate' | 'p
         icon: "⭐",
         target: 50,
         category: 'consistency',
-        color: 'from-[#B5E3FF] to-[#7EC8E3]' // Jasny akcent
+        color: 'from-[#B5E3FF] to-[#7EC8E3]' // Light accent
     },
     {
         id: "century-club",
@@ -194,7 +194,7 @@ const achievementDefinitions: Omit<Achievement, 'unlocked' | 'unlockedDate' | 'p
         icon: "💪",
         target: 1,
         category: 'special',
-        color: 'from-[#B8DCE5] to-[#A7D8F0]' // Pastelowy niebieski
+        color: 'from-[#B8DCE5] to-[#A7D8F0]' // Pastel blue
     },
     {
         id: "perfect-week",
@@ -212,100 +212,58 @@ const achievementDefinitions: Omit<Achievement, 'unlocked' | 'unlockedDate' | 'p
         icon: "🌅",
         target: 5,
         category: 'activity',
-        color: 'from-[#E8F4F8] to-[#B5E3FF]' // Poranek
+        color: 'from-[#E8F4F8] to-[#B5E3FF]' // Morning
     }
 ];
 
-// Store dla osiągnięć użytkownika
+// Store for user achievements
 function createAchievementsStore() {
-    // Inicjalizuj od razu z danymi
-    let initialData: Achievement[] = [];
-    
-    console.log('🎯 Creating achievements store, browser:', browser);
-    console.log('🎯 Achievement definitions count:', achievementDefinitions.length);
-    
-    if (browser) {
-        const stored = localStorage.getItem('achievements');
-        console.log('🎯 Stored achievements in localStorage:', stored ? 'found' : 'not found');
-        
-        if (stored) {
-            try {
-                initialData = JSON.parse(stored);
-                console.log('🎯 Parsed achievements from localStorage:', initialData.length);
-            } catch (error) {
-                console.error('❌ Error parsing achievements:', error);
-                initialData = achievementDefinitions.map(def => ({
-                    ...def,
-                    unlocked: false,
-                    progress: 0
-                }));
-                console.log('🎯 Created fresh achievements:', initialData.length);
-            }
-        } else {
-            initialData = achievementDefinitions.map(def => ({
-                ...def,
-                unlocked: false,
-                progress: 0
-            }));
-            console.log('🎯 Created initial achievements (no localStorage):', initialData.length);
-        }
-    } else {
-        // SSR - użyj definicji
-        initialData = achievementDefinitions.map(def => ({
-            ...def,
-            unlocked: false,
-            progress: 0
-        }));
-        console.log('🎯 Created SSR achievements:', initialData.length);
-    }
-    
-    const { subscribe, set, update } = writable<Achievement[]>(initialData);
+    const { subscribe, set, update } = writable<Achievement[]>([]);
     
     return {
         subscribe,
         
-        // Inicjalizacja osiągnięć (teraz głównie do odświeżenia)
+        // Initialize achievements
         initialize: () => {
-            if (!browser) {
-                console.log('🎯 Initialize called but browser=false, skipping');
-                return;
-            }
+            if (!browser) return;
             
-            console.log('🎯 Initialize called, browser=true');
+            console.log('🎮 Initializing achievements store...');
+            
             const stored = localStorage.getItem('achievements');
-            console.log('🎯 Stored in localStorage:', stored ? 'found' : 'not found');
-            
             if (stored) {
                 try {
                     const parsed = JSON.parse(stored);
-                    console.log('🎯 Parsed achievements:', parsed.length);
+                    console.log(`📦 Loaded ${parsed.length} achievements from localStorage`);
                     set(parsed);
+                    isInitialized = true;
                 } catch (error) {
-                    console.error('❌ Error parsing achievements:', error);
-                    // Inicjalizuj z definicjami
+                    console.error('Error parsing achievements:', error);
+                    // Initialize with definitions
                     const initial = achievementDefinitions.map(def => ({
                         ...def,
                         unlocked: false,
                         progress: 0
                     }));
-                    console.log('🎯 Created fresh achievements after error:', initial.length);
+                    console.log(`✨ Created ${initial.length} fresh achievements`);
                     set(initial);
                     localStorage.setItem('achievements', JSON.stringify(initial));
+                    isInitialized = true;
                 }
             } else {
-                // Pierwsza inicjalizacja
+                // First initialization
                 const initial = achievementDefinitions.map(def => ({
                     ...def,
                     unlocked: false,
                     progress: 0
                 }));
-                console.log('🎯 Created initial achievements (first time):', initial.length);
+                console.log(`✨ First time initialization: ${initial.length} achievements`);
                 set(initial);
                 localStorage.setItem('achievements', JSON.stringify(initial));
+                isInitialized = true;
             }
         },
         
-        // Odblokuj osiągnięcie
+        // Unlock achievement
         unlock: (achievementId: string) => {
             update(achievements => {
                 const updated = achievements.map(achievement => {
@@ -328,7 +286,7 @@ function createAchievementsStore() {
             });
         },
         
-        // Aktualizuj progress
+        // Update progress
         updateProgress: (achievementId: string, progress: number) => {
             update(achievements => {
                 const updated = achievements.map(achievement => {
@@ -354,26 +312,29 @@ function createAchievementsStore() {
             });
         },
         
-        // Sprawdź i odblokuj osiągnięcia na podstawie danych użytkownika
+        // Check and unlock achievements based on user data
         checkAchievements: (userStreak: number, totalDaysCompleted: number, hasRestarted: boolean, userLevel?: number) => {
+            console.log('🎯 Checking achievements with:', { userStreak, totalDaysCompleted, hasRestarted, userLevel });
+            
             update(achievements => {
+                let unlockedCount = 0;
                 const updated = achievements.map(achievement => {
                     let shouldUpdate = false;
                     let newProgress = achievement.progress;
                     
-                    // Sprawdź streak achievements
+                    // Check streak achievements
                     if (achievement.category === 'streak') {
                         newProgress = userStreak;
                         shouldUpdate = true;
                     }
                     
-                    // Sprawdź consistency achievements (total days)
+                    // Check consistency achievements (total days)
                     if (achievement.category === 'consistency') {
                         newProgress = totalDaysCompleted;
                         shouldUpdate = true;
                     }
                     
-                    // Sprawdź level achievements (activity)
+                    // Check level achievements (activity)
                     if (achievement.category === 'activity' && userLevel !== undefined &&
                         ['beginner', 'novice', 'apprentice', 'skilled', 'expert', 'master', 'grandmaster'].includes(achievement.id)) {
                         newProgress = userLevel;
@@ -390,6 +351,11 @@ function createAchievementsStore() {
                         const finalProgress = Math.min(newProgress, achievement.target);
                         const shouldUnlock = finalProgress >= achievement.target && !achievement.unlocked;
                         
+                        if (shouldUnlock) {
+                            console.log(`🏆 Unlocking achievement: ${achievement.title} (${finalProgress}/${achievement.target})`);
+                            unlockedCount++;
+                        }
+                        
                         return {
                             ...achievement,
                             progress: finalProgress,
@@ -401,6 +367,8 @@ function createAchievementsStore() {
                     return achievement;
                 });
                 
+                console.log(`✅ Unlocked ${unlockedCount} new achievements`);
+                
                 if (browser) {
                     localStorage.setItem('achievements', JSON.stringify(updated));
                 }
@@ -409,7 +377,7 @@ function createAchievementsStore() {
             });
         },
         
-        // Reset wszystkich osiągnięć (do testowania)
+        // Reset all achievements (for testing)
         reset: () => {
             const initial = achievementDefinitions.map(def => ({
                 ...def,
@@ -445,13 +413,29 @@ export const achievementStats = derived(achievements, ($achievements) => {
     };
 });
 
-// Auto-sprawdzanie osiągnięć przy zmianie danych użytkownika
+// Auto-check achievements when user data changes
+let isInitialized = false;
+
 if (browser) {
     currentUser.subscribe($user => {
         if ($user) {
-            // Oblicz total completed days (możemy to rozbudować później)
-            const totalCompleted = $user.streak || 0; // Tymczasowo używamy streak
-            const hasRestarted = $user.streak === 1; // Prosta logika
+            console.log('👤 User changed in achievements store:', { 
+                username: $user.username, 
+                streak: $user.streak, 
+                level: $user.level,
+                isInitialized 
+            });
+            
+            // Initialize on first user load if not already initialized
+            if (!isInitialized) {
+                console.log('🔧 Auto-initializing achievements...');
+                achievements.initialize();
+                isInitialized = true;
+            }
+            
+            // Calculate total completed days (can expand later)
+            const totalCompleted = $user.streak || 0; // Temporary: use streak
+            const hasRestarted = $user.streak === 1; // Simple logic
             
             achievements.checkAchievements($user.streak || 0, totalCompleted, hasRestarted, $user.level || 0);
         }

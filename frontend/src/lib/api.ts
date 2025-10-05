@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:3000";
+﻿const API_URL = "http://localhost:3000";
 const USE_MOCK = true; // Tymczasowo włączony tryb mock dla stabilności
 
 export interface OnboardingData {
@@ -20,7 +20,7 @@ export interface OnboardingData {
     };
 }
 
-// Mock funkcja dla tworzenia użytkownika
+// Mock function for creating user
 const createUserMock = async (userData: OnboardingData) => {
     console.log('Mock: Creating user with data:', userData);
     
@@ -68,7 +68,7 @@ export const createUser = async (userData: OnboardingData) => {
     }
 };
 
-// Funkcja logowania użytkownika
+// User login function
 export const loginUser = async (username: string) => {
     if (USE_MOCK) {
         console.log('Mock: Logging in user:', username);
@@ -121,7 +121,7 @@ export const loginUser = async (username: string) => {
     }
 };
 
-// Funkcja pobierania listy użytkowników
+// Get users list function
 export const getAllUsers = async () => {
     if (USE_MOCK) {
         return {
@@ -144,7 +144,7 @@ export const getAllUsers = async () => {
     }
 };
 
-// Funkcja aktualizacji progress użytkownika
+// Update user progress function
 export const updateUserProgress = async (userId: string, progress: any) => {
     if (USE_MOCK) {
         console.log('Mock: Updating progress for user:', userId, progress);

@@ -246,7 +246,7 @@
                 <div class="lg:w-1/2 w-full">
                     <div class="bg-white rounded-3xl shadow-2xl border-[6px] border-[#A7D8F0] p-8">
                         <h2 class="font-['Lato'] text-3xl font-bold text-slate-900 mb-4 text-center">
-                            Poznajmy się! 😊
+                            Let's get to know each other! 😊
                         </h2>
                         <p class="font-['Lato'] text-lg text-slate-700 mb-8 text-center">
                             What should I call you?

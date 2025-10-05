@@ -18,18 +18,18 @@
     ✓ Wyraźne granice i kontrast - WCAG AAA
 -->
 <header class="
-    h-20 w-full
-    flex items-center justify-end px-6
+    h-22 w-full
+    flex items-center justify-center px-6
     bg-[#D4EAF7] text-slate-900
     border-b-[6px] border-[#A7D8F0] shadow-lg shadow-[#A7D8F0]/30
 ">
-    <!-- Profil użytkownika po prawej stronie -->
+    <!-- Profil użytkownika wycentrowany -->
     <div class="bg-white/80 rounded-3xl px-6 py-3 border-[6px] border-[#B5E3FF] shadow-lg">
         <div class="flex items-center gap-3">
             <span class="text-2xl">👤</span>
             <div class="text-left">
-                <div class="font-['Lato'] text-xl font-bold text-slate-900">
-                    {user.username}
+                <div class="font-['Lato'] text-l font-bold text-slate-900">
+                    borbi
                 </div>
                 <div class="font-['Lato'] text-sm font-semibold text-slate-700">
                     Level {user.level} • {user.xp} XP

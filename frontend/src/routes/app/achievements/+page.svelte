@@ -17,48 +17,46 @@
     // Stats from derived store
     $: stats = $achievementStats;
     
-    // Debug logs
-    $: {
-        console.log('🎯 Current user:', $currentUser);
-        console.log('🎯 Achievements store:', $achievements);
-        console.log('🎯 Filtered achievements:', filteredAchievements);
-        console.log('🎯 Stats:', stats);
-        console.log('🎯 Current filter:', currentFilter);
-    }
-    
     onMount(() => {
-        // Initialize achievements on mount
-        console.log('🎯 Mounting achievements component');
-        console.log('🎯 Current user on mount:', $currentUser);
-        console.log('🎯 Before initialize, achievements count:', $achievements.length);
+        console.log('🎯 Achievements page mounted');
+        console.log('Current user:', $currentUser);
+        console.log('Current achievements:', $achievements);
         
-        // Wyczyść localStorage dla testów (można usunąć później)
-        localStorage.removeItem('achievements');
-        console.log('🎯 Cleared localStorage');
-        
-        achievements.initialize();
-        console.log('🎯 After initialize, achievements:', $achievements);
-        
-        // Sprawdź osiągnięcia manualnie jeśli user istnieje
-        if ($currentUser) {
-            console.log('🎯 Manually checking achievements for user:', $currentUser);
+        // The auto-subscribe in achievements.ts will handle initialization and checking
+        // But we can manually trigger a check if needed
+        if ($currentUser && $achievements.length === 0) {
+            console.log('⚠️ No achievements loaded, initializing...');
+            achievements.initialize();
+            
             achievements.checkAchievements(
                 $currentUser.streak || 0,
                 $currentUser.streak || 0,
-                $currentUser.streak === 1,
+                false,
                 $currentUser.level || 0
             );
         }
-        
-        // Sprawdź ponownie po krótkim czasie (async)
-        setTimeout(() => {
-            console.log('🎯 After timeout, achievements:', $achievements);
-            console.log('🎯 After timeout, user:', $currentUser);
-        }, 100);
     });
     
     function setFilter(filter: FilterType) {
         currentFilter = filter;
+    }
+    
+    // Debug function to reset achievements
+    function resetAchievements() {
+        if (confirm('Reset all achievements? This will clear all progress.')) {
+            achievements.reset();
+            console.log('🔄 Achievements reset');
+            
+            // Re-check with current user
+            if ($currentUser) {
+                achievements.checkAchievements(
+                    $currentUser.streak || 0,
+                    $currentUser.streak || 0,
+                    false,
+                    $currentUser.level || 0
+                );
+            }
+        }
     }
 </script>
 
@@ -86,6 +84,14 @@
                             {stats.percentage}%
                         </span>
                     </div>
+                    <!-- Debug button -->
+                    <button 
+                        onclick={resetAchievements}
+                        class="px-4 py-2 bg-red-100 hover:bg-red-200 border-[4px] border-red-300 rounded-2xl font-['Lato'] text-sm font-bold text-red-900"
+                        title="Reset all achievements (for testing)"
+                    >
+                        🔄 Reset
+                    </button>
                 </div>
             </div>
 
@@ -122,17 +128,6 @@
 
         <!-- Achievements Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
-            {#if filteredAchievements.length === 0}
-                <div class="col-span-full text-center p-12 bg-white rounded-3xl border-[6px] border-[#D4EAF7]">
-                    <p class="font-['Lato'] text-xl text-[#334155] font-semibold">
-                        {#if $achievements.length === 0}
-                            🎯 Loading achievements...
-                        {:else}
-                            No achievements match this filter.
-                        {/if}
-                    </p>
-                </div>
-            {/if}
             {#each filteredAchievements as achievement}
                 <div class="group relative rounded-3xl p-8 transition-all duration-300 hover:scale-105 border-[6px]
                             {achievement.unlocked 

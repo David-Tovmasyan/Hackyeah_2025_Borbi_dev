@@ -1,4 +1,4 @@
-import { writable } from 'svelte/store';
+﻿import { writable } from 'svelte/store';
 import { browser } from '$app/environment';
 
 export interface User {
@@ -19,17 +19,17 @@ export interface User {
     };
 }
 
-// Mock dane użytkownika dla testowania
+// Mock user data for testing
 const mockUser: User = {
     id: '123e4567-e89b-12d3-a456-426614174000',
     username: 'user',
-    hp: 100,
+    hp: 92,
     xp: 1150,
-    spentPrestige: 0,
-    level: 5, // xp/200 = level (1150/200 = 5.75 ≈ 6)
-    streak: 15, // Dni z rzędu - realistyczny streak
+    spentPrestige: 3,
+    level: 6, // xp/200 = level (1150/200 = 5.75 ≈ 6)
+    streak: 15, // Days in a row - realistic streak
     dailyProgress: {
-        steps: 8500,
+        steps: 8234,
         stepsGoal: 10000,
         water: 6,
         waterGoal: 8,
@@ -38,20 +38,19 @@ const mockUser: User = {
     }
 };
 
-// Store dla aktualnego użytkownika
+// Store for current user
 export const currentUser = writable<User | null>(null);
 
-// Funkcja inicjalizacji użytkownika z localStorage i API
+// Initialize user from localStorage and API
 export async function initializeUser() {
     if (!browser) return false;
     
     const storedUsername = localStorage.getItem('username');
     
     if (!storedUsername) {
-        console.log('ℹ️ Brak zalogowanego użytkownika');
-        // W development mode - użyj mock usera
+        console.log('ℹ️ No logged in user');
+        // Fallback to mock user in DEV mode
         if (import.meta.env.DEV) {
-            console.log('🧪 DEV MODE: Using mock user');
             currentUser.set(mockUser);
             return true;
         }
@@ -59,50 +58,48 @@ export async function initializeUser() {
     }
     
     try {
-        // Spróbuj zalogować użytkownika ponownie z API
-        console.log('🔄 Próba ponownego logowania użytkownika:', storedUsername);
+        // Try to re-login user from API
+        console.log('🔄 Attempting to re-login user:', storedUsername);
         const success = await loginUserWithAPI(storedUsername);
         
         if (!success) {
-            console.log('❌ Nie można było ponownie zalogować użytkownika');
-            // W development mode - użyj mock usera jako fallback
+            console.log('❌ Could not re-login user, clearing data');
+            logoutUser();
+            // Fallback to mock user in DEV mode
             if (import.meta.env.DEV) {
-                console.log('🧪 DEV MODE: Falling back to mock user');
                 currentUser.set(mockUser);
                 return true;
             }
-            logoutUser();
             return false;
         }
         
-        console.log('✅ Użytkownik został pomyślnie zainicjalizowany');
+        console.log('✅ User successfully initialized');
         return true;
     } catch (error) {
-        console.error('❌ Błąd podczas inicjalizacji użytkownika:', error);
-        // W development mode - użyj mock usera jako fallback
+        console.error('❌ Error during user initialization:', error);
+        logoutUser();
+        // Fallback to mock user in DEV mode on error
         if (import.meta.env.DEV) {
-            console.log('🧪 DEV MODE: Error, falling back to mock user');
             currentUser.set(mockUser);
             return true;
         }
-        logoutUser();
         return false;
     }
 }
 
-// Funkcja aktualizacji danych użytkownika
+// Function to update user data
 export function updateUser(userData: Partial<User>) {
     currentUser.update(user => {
         if (!user) return user;
         const updatedUser = { ...user, ...userData };
-        console.log('🧪 Aktualizacja mockowych danych użytkownika:', updatedUser);
+        console.log('🧪 Updating mock user data:', updatedUser);
         return updatedUser;
     });
 }
 
-// Funkcja ustawienia nowego użytkownika (po onboardingu)
+// Function to set new user (after onboarding)
 export function setUser(newUser: User) {
-    console.log('🧪 Ustawienie nowego użytkownika:', newUser);
+    console.log('🧪 Setting new user:', newUser);
     currentUser.set(newUser);
     if (browser) {
         localStorage.setItem('userId', newUser.id);
@@ -110,15 +107,15 @@ export function setUser(newUser: User) {
     }
 }
 
-// Funkcja logowania użytkownika z API
+// Function to login user with API
 export async function loginUserWithAPI(username: string) {
     if (!browser) return false;
 
     try {
-        // Importujemy dynamicznie żeby uniknąć problemów SSR
+        // Import dynamically to avoid SSR issues
         const { loginUser } = await import('$lib/api');
         
-        console.log('🔑 Próba logowania użytkownika:', username);
+        console.log('🔑 Attempting to login user:', username);
         
         try {
             const response = await loginUser(username);
@@ -146,19 +143,19 @@ export async function loginUserWithAPI(username: string) {
                 localStorage.setItem('userId', loggedUser.id);
                 localStorage.setItem('username', loggedUser.username);
                 
-                console.log('✅ Użytkownik zalogowany:', loggedUser);
+                console.log('✅ User logged in:', loggedUser);
                 return true;
             } else {
-                console.log('❌ Nieprawidłowa odpowiedź z API');
+                console.log('❌ Invalid API response');
                 return false;
             }
         } catch (apiError) {
-            console.log('❌ Błąd API podczas logowania:', apiError);
+            console.log('❌ API error during login:', apiError);
             return false;
         }
         
     } catch (error) {
-        console.error('❌ Błąd logowania (ogólny):', error);
+        console.error('❌ Login error (general):', error);
         return false;
     }
 }
@@ -167,13 +164,13 @@ export async function loginUserWithAPI(username: string) {
 export function logoutUser() {
     if (!browser) return;
     
-    console.log('🚪 Wylogowywanie użytkownika');
+    console.log('🚪 Logging out user');
     currentUser.set(null);
     localStorage.removeItem('userId');
     localStorage.removeItem('username');
 }
 
-// Funkcja sprawdzenia czy użytkownik jest zalogowany
+// Check if user is logged in
 export function isUserLoggedIn(): boolean {
     if (!browser) return false;
     

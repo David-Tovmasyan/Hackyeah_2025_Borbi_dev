@@ -1,4 +1,4 @@
-<script lang="ts">
+﻿<script lang="ts">
     import { currentUser } from '$lib/stores/user';
 
     type UserQuest = {
@@ -19,9 +19,10 @@
     };
 
     type DayGoals = {
-        sleep: UserQuest;
-        diet: UserQuest;
-        activity: UserQuest;
+        steps: UserQuest;      // Fixed: 10k steps
+        sleep: UserQuest;      // Fixed: regular sleep
+        eating: UserQuest;     // Fixed: regular eating
+        bonus: UserQuest;      // Random bonus task
     };
 
     type RoadmapStep = {
@@ -34,45 +35,50 @@
         completionPercentage: number; // 0-100% based on completed goals
     };
 
-    // Mock Quests data by category (UTF-8 emojis)
-    const sleepQuests: Quest[] = [
-        { id: 'sleep1', title: '8 godzin snu', description: 'Śpij co najmniej 8 godzin', emoji: '💤', difficulty: 'medium', category: 'sleep' },
-        { id: 'sleep2', title: 'Bez ekranów przed snem', description: '1h bez ekranów przed snem', emoji: '📵', difficulty: 'medium', category: 'sleep' },
-        { id: 'sleep3', title: 'Regularna pora snu', description: 'Idź spać o tej samej porze', emoji: '🕘', difficulty: 'easy', category: 'sleep' },
-        { id: 'sleep4', title: 'Spokojne budzenie', description: 'Wstań bez użycia alarmu', emoji: '🌅', difficulty: 'hard', category: 'sleep' },
-        { id: 'sleep5', title: 'Relaksacja przed snem', description: '15 min medytacji przed snem', emoji: '🧘‍♀️', difficulty: 'medium', category: 'sleep' }
+    // Fixed daily quests - always the same
+    const fixedStepsQuest: Quest = { 
+        id: 'steps-fixed', 
+        title: '10,000 kroków', 
+        description: 'Zrób 10,000 kroków dzisiaj', 
+        emoji: '�', 
+        difficulty: 'medium', 
+        category: 'activity' 
+    };
+
+    const fixedSleepQuest: Quest = { 
+        id: 'sleep-fixed', 
+        title: 'Regularny sen', 
+        description: 'Śpij co najmniej 8 godzin', 
+        emoji: '💤', 
+        difficulty: 'medium', 
+        category: 'sleep' 
+    };
+
+    const fixedEatingQuest: Quest = { 
+        id: 'eating-fixed', 
+        title: 'Regularne jedzenie', 
+        description: 'Jedz 3 posiłki o regularnych porach', 
+        emoji: '🍽️', 
+        difficulty: 'easy', 
+        category: 'diet' 
+    };
+
+    // Bonus quests pool - rotating random tasks
+    const bonusQuests: Quest[] = [
+        { id: 'bonus1', title: '2L wody', description: 'Wypij 2 litry wody', emoji: '💧', difficulty: 'easy', category: 'diet' },
+        { id: 'bonus2', title: '30min ćwiczeń', description: 'Ćwicz przez 30 minut', emoji: '�', difficulty: 'medium', category: 'activity' },
+        { id: 'bonus3', title: 'Aktywność outdoor', description: 'Spędź 1h na zewnątrz', emoji: '�', difficulty: 'easy', category: 'activity' },
+        { id: 'bonus4', title: 'Bez fast food', description: 'Unikaj fast foodów', emoji: '🥪', difficulty: 'medium', category: 'diet' },
+        { id: 'bonus5', title: 'Rozciąganie', description: '15min stretching', emoji: '🤸‍♀️', difficulty: 'easy', category: 'activity' },
+        { id: 'bonus6', title: 'Bez ekranów przed snem', description: '1h bez ekranów przed snem', emoji: '📵', difficulty: 'medium', category: 'sleep' },
+        { id: 'bonus7', title: '5 porcji warzyw', description: 'Zjedz 5 porcji owoców/warzyw', emoji: '🍎', difficulty: 'medium', category: 'diet' },
+        { id: 'bonus8', title: 'Medytacja', description: '15 min medytacji', emoji: '�‍♀️', difficulty: 'medium', category: 'mindfulness' }
     ];
 
-    const dietQuests: Quest[] = [
-        { id: 'diet1', title: 'Zdrowe śniadanie', description: 'Zjedz pożywne śniadanie', emoji: '🥗', difficulty: 'easy', category: 'diet' },
-        { id: 'diet2', title: '2L wody', description: 'Wypij 2 litry wody', emoji: '💧', difficulty: 'easy', category: 'diet' },
-        { id: 'diet3', title: 'Bez fast food', description: 'Unikaj fast foodów', emoji: '🥪', difficulty: 'medium', category: 'diet' },
-        { id: 'diet4', title: '5 porcji warzyw', description: 'Zjedz 5 porcji owoców/warzyw', emoji: '🍎', difficulty: 'medium', category: 'diet' },
-        { id: 'diet5', title: 'Bez cukru', description: 'Dzień bez słodyczy', emoji: '🚫🍭', difficulty: 'hard', category: 'diet' }
-    ];
-
-    const activityQuests: Quest[] = [
-        { id: 'activity1', title: '10,000 kroków', description: 'Zrób 10,000 kroków', emoji: '🚶', difficulty: 'medium', category: 'activity' },
-        { id: 'activity2', title: '30min ćwiczeń', description: 'Ćwicz przez 30 minut', emoji: '🏃', difficulty: 'medium', category: 'activity' },
-        { id: 'activity3', title: 'Aktywność outdoor', description: 'Spędź 1h na zewnątrz', emoji: '🌳', difficulty: 'easy', category: 'activity' },
-        { id: 'activity4', title: 'Siłownia', description: 'Trening siłowy', emoji: '💪', difficulty: 'hard', category: 'activity' },
-        { id: 'activity5', title: 'Rozciąganie', description: '15min stretching', emoji: '🤸‍♀️', difficulty: 'easy', category: 'activity' }
-    ];
-
-    // Helper function to create quest for a day and category
-    function createDayQuest(day: number, category: 'sleep' | 'diet' | 'activity', userStreak: number): UserQuest {
-        const questsByCategory = {
-            sleep: sleepQuests,
-            diet: dietQuests,
-            activity: activityQuests
-        };
-        
-        const categoryQuests = questsByCategory[category];
-        const questIndex = (day - 1) % categoryQuests.length;
-        const quest = categoryQuests[questIndex];
-        
+    // Helper function to create a fixed quest for a day
+    function createFixedQuest(day: number, quest: Quest, questType: string, userStreak: number): UserQuest {
         return {
-            id: `day${day}-${category}`,
+            id: `day${day}-${questType}`,
             questId: quest.id,
             userId: $currentUser?.id || 'unknown',
             completed: day <= userStreak, // Completed if within user's streak
@@ -80,7 +86,21 @@
         };
     }
 
-    const allQuests = [...sleepQuests, ...dietQuests, ...activityQuests];
+    // Helper function to create bonus quest for a day
+    function createBonusQuest(day: number, userStreak: number): UserQuest {
+        const bonusIndex = (day - 1) % bonusQuests.length;
+        const quest = bonusQuests[bonusIndex];
+        
+        return {
+            id: `day${day}-bonus`,
+            questId: quest.id,
+            userId: $currentUser?.id || 'unknown',
+            completed: day <= userStreak,
+            date: new Date()
+        };
+    }
+
+    const allQuests = [fixedStepsQuest, fixedSleepQuest, fixedEatingQuest, ...bonusQuests];
 
     // Generate roadmap data based on user streak
     function generateRoadmapData(userStreak: number): RoadmapStep[] {
@@ -106,13 +126,14 @@
         
         // Generate steps based on user's streak
         for (let day = 1; day <= totalSteps; day++) {
-            // Create quests for this day
-            const sleepQuest = createDayQuest(day, 'sleep', userStreak);
-            const dietQuest = createDayQuest(day, 'diet', userStreak);
-            const activityQuest = createDayQuest(day, 'activity', userStreak);
+            // Create 4 quests for this day: 3 fixed + 1 bonus
+            const stepsQuest = createFixedQuest(day, fixedStepsQuest, 'steps', userStreak);
+            const sleepQuest = createFixedQuest(day, fixedSleepQuest, 'sleep', userStreak);
+            const eatingQuest = createFixedQuest(day, fixedEatingQuest, 'eating', userStreak);
+            const bonusQuest = createBonusQuest(day, userStreak);
 
-            const completedGoals = [sleepQuest, dietQuest, activityQuest].filter(q => q.completed).length;
-            const completionPercentage = (completedGoals / 3) * 100;
+            const completedGoals = [stepsQuest, sleepQuest, eatingQuest, bonusQuest].filter(q => q.completed).length;
+            const completionPercentage = (completedGoals / 4) * 100;
 
             let status: 'completed' | 'current' | 'locked';
             let isToday = false;
@@ -132,9 +153,10 @@
             steps.push({
                 id: day,
                 dayGoals: {
+                    steps: stepsQuest,
                     sleep: sleepQuest,
-                    diet: dietQuest,
-                    activity: activityQuest
+                    eating: eatingQuest,
+                    bonus: bonusQuest
                 },
                 status,
                 position: positions[day - 1],
@@ -228,21 +250,21 @@
             dailyGoalCompleted = true;
             console.log(`Day ${step.dayNumber} completed! All goals achieved. New streak: ${newStreak}`);
         } else {
-            console.log(`Day ${step.dayNumber} not yet complete. Complete all goals: Sleep ✓ Diet ✓ Activity ✓`);
+            console.log(`Day ${step.dayNumber} not yet complete. Complete all 4 goals!`);
         }
     }
 
     // Function to toggle individual goal completion (for current day only)
-    function toggleGoal(step: RoadmapStep, category: 'sleep' | 'diet' | 'activity') {
+    function toggleGoal(step: RoadmapStep, category: 'steps' | 'sleep' | 'eating' | 'bonus') {
         if (!step.isToday) return;
         
         // Only allow toggling if it's the current day (streak + 1)
         if (step.dayNumber === userStreak + 1) {
             step.dayGoals[category].completed = !step.dayGoals[category].completed;
             
-            // Recalculate completion percentage
+            // Recalculate completion percentage based on 4 tasks
             const completedGoals = Object.values(step.dayGoals).filter(quest => quest.completed).length;
-            step.completionPercentage = (completedGoals / 3) * 100;
+            step.completionPercentage = (completedGoals / 4) * 100;
             
             // Force reactivity
             roadmapData = [...roadmapData];
@@ -326,12 +348,12 @@
                 </div>
                 
                 <div class="absolute top-full left-1/2 -translate-x-1/2 -translate-y-1 bg-white/98 backdrop-blur-md rounded-xl px-4 py-3 min-w-[clamp(250px,35vw,320px)] max-w-[clamp(280px,40vw,350px)] text-left shadow-[0_10px_25px_rgba(167,216,240,0.6)] opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 mt-2 border-2 border-[#A7D8F0] z-30 group-hover:translate-y-1">
-                    <h3 class="font-['Lato'] text-lg font-bold text-slate-900 mb-2 text-center">Day {step.dayNumber}</h3>
+                    <h3 class="font-['Lato'] text-lg font-bold text-slate-900 mb-2 text-center">Dzień {step.dayNumber}</h3>
                     
-                    <!-- Daily goals progress -->
+                    <!-- Daily goals progress - Always show all 4 tasks in order -->
                     <div class="space-y-1 mb-2">
                         {#each Object.entries(step.dayGoals) as [categoryKey, userQuest]}
-                            {@const category = categoryKey as 'sleep' | 'diet' | 'activity'}
+                            {@const category = categoryKey as 'steps' | 'sleep' | 'eating' | 'bonus'}
                             {@const quest = allQuests.find(q => q.id === userQuest.questId)}
                             {#if quest}
                                 <div class="flex items-center gap-2 text-sm py-1.5 px-2 rounded-lg bg-[#F0F9FF] border border-[#B5E3FF]">

@@ -8,7 +8,7 @@
 
     async function testLogin() {
         isLoading = true;
-        message = 'Attempting login...';
+        message = 'Próba logowania...';
         
         try {
             const success = await loginUserWithAPI(testUsername);
@@ -44,11 +44,11 @@
         <!-- Current User Status -->
         <div class="bg-[#F0F9FF] border-[4px] border-[#B5E3FF] rounded-2xl p-4 mb-6">
             <h2 class="font-['Lato'] text-xl font-bold text-slate-900 mb-2">
-                Current User:
+                Aktualny użytkownik:
             </h2>
             {#if $currentUser}
                 <div class="font-['Lato'] text-lg text-slate-800">
-                    <p><strong>Name:</strong> {$currentUser.username}</p>
+                    <p><strong>Nazwa:</strong> {$currentUser.username}</p>
                     <p><strong>ID:</strong> {$currentUser.id}</p>
                     <p><strong>XP:</strong> {$currentUser.xp}</p>
                     <p><strong>Level:</strong> {$currentUser.level}</p>
@@ -57,7 +57,7 @@
                     {/if}
                 </div>
             {:else}
-                <p class="font-['Lato'] text-lg text-slate-600">No logged in user</p>
+                <p class="font-['Lato'] text-lg text-slate-600">Brak zalogowanego użytkownika</p>
             {/if}
         </div>
 
@@ -65,7 +65,7 @@
         <div class="space-y-4">
             <div>
                 <label for="testUsername" class="block font-['Lato'] text-lg font-bold text-slate-900 mb-2">
-                    Login Test:
+                    Test logowania:
                 </label>
                 <input
                     id="testUsername"
@@ -81,7 +81,7 @@
                     disabled={isLoading}
                     class="px-6 py-3 bg-gradient-to-r from-[#7EC8E3] to-[#5DADE2] text-white font-['Lato'] text-lg font-bold rounded-2xl hover:scale-105 transition-transform disabled:opacity-50"
                 >
-                    {isLoading ? '🔄' : '🔑'} Log In
+                    {isLoading ? '🔄' : '🔑'} Zaloguj
                 </button>
                 
                 <button
@@ -106,7 +106,7 @@
                 href="/"
                 class="px-4 py-2 border-[4px] border-[#A7D8F0] text-slate-900 font-['Lato'] font-bold rounded-2xl hover:scale-105 transition-transform"
             >
-                🏠 Home
+                🏠 Strona główna
             </a>
             
             <a 
